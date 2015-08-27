@@ -70,6 +70,13 @@ public:
             setUsingNativeTitleBar (true);
             setContentOwned (new MainContentComponent(), true);
 
+            
+            #if JUCE_IOS || JUCE_ANDROID
+            setFullScreen (true);
+            #else
+            setResizable (true, true);
+            #endif
+            
             centreWithSize (getWidth(), getHeight());
             setVisible (true);
             
@@ -78,36 +85,90 @@ public:
             
             
             UIView* view = (UIView*) getTopLevelComponent()->getWindowHandle();
-            UIResponder* responder = view.nextResponder;
+            UIResponder* viewResponder = view.nextResponder;
             
-            if ([responder isKindOfClass: [UIViewController class]])
+            if ([viewResponder isKindOfClass: [UIViewController class]])
             {
-                UIViewController* controller = (UIViewController*) responder;
+                UIViewController* controller = (UIViewController*) viewResponder;
                 //xxx
                 
                 //self.viewController = [[YourViewControllername alloc] initWithNibName:@"YourViewControllername" bundle:nil]
                 
 
-                responder = ((UIWindow*) controller.nextResponder);
+                UIResponder* controllerResponder = ((UIWindow*) controller.nextResponder);
                 
                 DBG ("Got UIViewController");
                 
-                if ([responder isKindOfClass: [UIWindow class]])
+                if ([controllerResponder isKindOfClass: [UIWindow class]])
                 {
-                    UIWindow* window = (UIWindow*) responder;
+                    UIWindow* window = (UIWindow*) controllerResponder;
                     
-                    window.rootViewController = NULL; // <-- prevents error "adding a root view controller <JuceUIViewController> as a child of view controller <UINavigationController>"
-                    UINavigationController *navController=[[UINavigationController alloc]initWithRootViewController:controller];
+                    window.rootViewController = nil; // <-- prevents error "adding a root view controller <JuceUIViewController> as a child of view controller <UINavigationController>"
+                    navController = [[UINavigationController alloc] initWithRootViewController:controller];
                     
-                    window.rootViewController = navController;
+                    [window setRootViewController:navController];
+                    [window addSubview:[navController view]];
                     [window makeKeyAndVisible];
                     
-                    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, getWidth(), 50)];
+                    //-------------------------------------------------------------
+                    
+                    UIBarButtonItem * button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                                                             target:controller
+                                                                                             action:@selector(done:)];
+                    [[controller navigationItem] setRightBarButtonItem:button];
+                    [button release];
+                    /*
+                    CGRect frame = view.bounds;
+                    
+                    navBar = [[UINavigationBar alloc] initWithFrame:frame];
+                    frame.size = [navBar sizeThatFits:frame.size];
+                    [navBar setFrame:frame];
+                    [navBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+                    [navBar setItems:[NSArray arrayWithObject:controller.navigationItem]];
+                    
                     navBar.barTintColor = [UIColor blueColor];
-                    [view addSubview:navBar];
+                    navController.navigationBar.tintColor = [UIColor blueColor];
+                    */
+                    
+                    // 1. hide the existing nav bar
+                    [navController setNavigationBarHidden:YES animated:NO];
+                    
+                    // 2. create a new nav bar and style it
+                    UINavigationBar *newNavBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(view.bounds), 32.0)];
+                    [newNavBar setBarTintColor:[UIColor blackColor]];
+                    [newNavBar setTintColor:[UIColor grayColor]];
+                    
+                    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                               [UIColor whiteColor],NSForegroundColorAttributeName, nil]; //,
+                                                               //[UIColor grayColor], UITextAttributeTextShadowColor,
+                                                               //[NSValue valueWithUIOffset:UIOffsetMake(-1, 0)], UITextAttributeTextShadowOffset, nil];
+                    
+                    [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+                    
+                    // 3. add a new navigation item w/title to the new nav bar
+                    UINavigationItem *newItem = [[UINavigationItem alloc] init];
+                    newItem.title = @"Test";
+                    [newNavBar setItems:@[newItem]];
+                    
+                    
+                    // 4. add the nav bar to the main view
+                    [view addSubview:newNavBar];
+                    
+                    // UIBarButtonItem *sendButton = [[UIBarButtonItem alloc]
+                    //                                initWithTitle:@"Send"
+                    //                                style:UIBarButtonItemStylePlain
+                    //                                target:navController
+                    //                                action:@selector(sendEmail)];
+                    //
+                    // navController.navigationItem.rightBarButtonItem = sendButton;
+                    //
+                    //[view addSubview:navBar];
+                    //[controller.view addSubview:navBar];
+                    
                     DBG ("Got UIWindow");
                     
                 }
+
             }
 
             
@@ -129,11 +190,16 @@ public:
         */
 
     private:
+        #if JUCE_IOS
+        UINavigationController *navController;
+        UINavigationBar *navBar;
+        #endif
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
     };
 
 private:
     ScopedPointer<MainWindow> mainWindow;
+
 };
 
 //==============================================================================
