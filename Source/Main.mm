@@ -146,9 +146,14 @@ public:
                     [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
                     
                     // 3. add a new navigation item w/title to the new nav bar
-                    UINavigationItem *newItem = [[UINavigationItem alloc] init];
-                    newItem.title = @"Test";
-                    [newNavBar setItems:@[newItem]];
+                    UINavigationItem *navItem = [[UINavigationItem alloc] init];
+                    navItem.title = @"Test";
+                    [newNavBar setItems:@[navItem]];
+                    
+                    // Add button
+                    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
+                                                                                    style:UIBarButtonItemStyleDone target:nil action:nil];
+                    navItem.rightBarButtonItem = rightButton;
                     
                     
                     // 4. add the nav bar to the main view
