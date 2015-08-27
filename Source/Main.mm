@@ -12,6 +12,40 @@
 #include "MainComponent.h"
 //#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "TestViewController.h"
+
+@interface ViewLoader : NSObject 
+{
+}
+
+@property UINavigationController *navController;
+
+- (void) nextView: (id) sender;
+
+@end
+
+
+
+@implementation ViewLoader
+
+- (id) initWithNavigationController: (UINavigationController *) navController {
+    self = [super init];
+    
+    if (self) {
+        _navController = navController;
+    }
+    
+    return self;
+}
+
+
+- (void) nextView: (id) sender {
+    
+    TestViewController *testViewController = [[TestViewController alloc] initWithNibName:@"TestViewController" bundle:nil];
+    [_navController pushViewController:testViewController animated:YES];
+}
+
+@end
 
 
 //==============================================================================
@@ -151,8 +185,12 @@ public:
                     [newNavBar setItems:@[navItem]];
                     
                     // Add button
+                    ViewLoader *viewLoader = [[ViewLoader alloc] initWithNavigationController: navController];
+                    
                     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
-                                                                                    style:UIBarButtonItemStyleDone target:nil action:nil];
+                                                                                   style:UIBarButtonItemStylePlain
+                                                                                   target:viewLoader
+                                                                                   action:@selector(nextView:)];
                     navItem.rightBarButtonItem = rightButton;
                     
                     
