@@ -117,18 +117,27 @@ public:
             
             #if JUCE_IOS
             iosWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-            iosWindow.backgroundColor = [UIColor blackColor];
+            iosWindow.backgroundColor = [UIColor grayColor];
             MainViewController *viewController = [[MainViewController alloc] init];
-            navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-            [iosWindow setRootViewController:navController];
-            [iosWindow makeKeyAndVisible];
-            //------------------------------------------------------
             
             UIView* juceView = [[UIView alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
             MainContentComponent* mainComponent = new MainContentComponent();
-            mainComponent->addToDesktop (0, juceView);
+            MainWindow::addComponentToUIView (*mainComponent, juceView);
+            //mainComponent->addToDesktop (0, juceView);
             viewController.view = juceView;
-            [iosWindow addSubview:[navController view]];
+            
+            TestViewController *testViewController = [[TestViewController alloc] initWithNibName:@"TestViewController" bundle:nil];
+            
+            
+            navController = [[UINavigationController alloc] initWithRootViewController: viewController];
+            [iosWindow setRootViewController:navController];
+            
+            //------------------------------------------------------
+            
+            
+            
+            [iosWindow addSubview: [viewController view]];
+            [iosWindow makeKeyAndVisible];
             
             navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(juceView.bounds), 32.0)];
             [navBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
@@ -140,7 +149,7 @@ public:
                                                        //                                                               //[UIColor grayColor], UITextAttributeTextShadowColor,
                                                        //                                                               //[NSValue valueWithUIOffset:UIOffsetMake(-1, 0)], UITextAttributeTextShadowOffset, nil];
                                                        //                    
-            [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+            //[[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
             
             UINavigationItem *navItem = [[UINavigationItem alloc] init];
             navItem.title = @"Test";
@@ -260,6 +269,14 @@ public:
             // ask the app to quit when this happens, but you can change this to do
             // whatever you need.
             JUCEApplication::getInstance()->systemRequestedQuit();
+        }
+        
+        static void addComponentToUIView (Component& comp, UIView* uiView)
+        {
+            comp.addToDesktop (0, (void*) uiView);
+            comp.setVisible (true);
+            comp.setBounds (uiView.bounds.origin.x, uiView.bounds.origin.y,
+                            uiView.bounds.size.width, uiView.bounds.size.height);
         }
 
         /* Note: Be careful if you override any DocumentWindow methods - the base
