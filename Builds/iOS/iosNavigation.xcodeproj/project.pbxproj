@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0809CA061B8F4AD9003C2F31 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0809CA041B8F4AD9003C2F31 /* TestViewController.m */; };
 		0809CA071B8F4AD9003C2F31 /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0809CA051B8F4AD9003C2F31 /* TestViewController.xib */; };
+		0809CA0A1B911B3F003C2F31 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0809CA091B911B3E003C2F31 /* MainViewController.m */; };
 		18EE11CE63715331F3A483B1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D89E18A3911A5F036946E8DD /* AudioToolbox.framework */; };
 		284F224632984D1937BDEE20 /* juce_core.mm in Sources */ = {isa = PBXBuildFile; fileRef = 57D69384A7877491F9D46302 /* juce_core.mm */; };
 		2A9B5CF75FDA1150DD514E3B /* juce_audio_basics.mm in Sources */ = {isa = PBXBuildFile; fileRef = A3287ABAA351B0DB952D7409 /* juce_audio_basics.mm */; };
@@ -71,6 +72,8 @@
 		0809CA031B8F4AD9003C2F31 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
 		0809CA041B8F4AD9003C2F31 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
 		0809CA051B8F4AD9003C2F31 /* TestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
+		0809CA081B911B3E003C2F31 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		0809CA091B911B3E003C2F31 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		083A3003836E4E2F7EFCAF7D /* juce_AsyncUpdater.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_AsyncUpdater.h; path = ../../../../juce/modules/juce_events/broadcasters/juce_AsyncUpdater.h; sourceTree = SOURCE_ROOT; };
 		08AF36F1BED0A1D5C57A2E04 /* juce_BubbleComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = juce_BubbleComponent.h; path = ../../../../juce/modules/juce_gui_basics/misc/juce_BubbleComponent.h; sourceTree = SOURCE_ROOT; };
 		091E8E05AB27A803CE74E38C /* juce_DrawableRectangle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = juce_DrawableRectangle.cpp; path = ../../../../juce/modules/juce_gui_basics/drawables/juce_DrawableRectangle.cpp; sourceTree = SOURCE_ROOT; };
@@ -1324,6 +1327,8 @@
 		3EAB12D849F4F9A8D8AD6FAF /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				0809CA081B911B3E003C2F31 /* MainViewController.h */,
+				0809CA091B911B3E003C2F31 /* MainViewController.m */,
 				0809CA031B8F4AD9003C2F31 /* TestViewController.h */,
 				0809CA041B8F4AD9003C2F31 /* TestViewController.m */,
 				0809CA051B8F4AD9003C2F31 /* TestViewController.xib */,
@@ -2721,6 +2726,7 @@
 				35D880C030DF36A3D98D6C3F /* juce_audio_formats.mm in Sources */,
 				317161464157F863D7E010E5 /* juce_audio_processors.mm in Sources */,
 				284F224632984D1937BDEE20 /* juce_core.mm in Sources */,
+				0809CA0A1B911B3F003C2F31 /* MainViewController.m in Sources */,
 				BDE6E6CD181C95DFA492DF4E /* juce_cryptography.mm in Sources */,
 				5A8261F7BF0130DD310E226D /* juce_data_structures.mm in Sources */,
 				C0A3363FA862955DC5145B2D /* juce_events.mm in Sources */,

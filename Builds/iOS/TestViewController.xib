@@ -20,10 +20,24 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <navigationBar contentMode="scaleToFill" misplaced="YES" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="ejC-dl-Fc4">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                    <items>
+                        <navigationItem title="Title" id="FIj-6V-Akr"/>
+                    </items>
+                </navigationBar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="ejC-dl-Fc4" secondAttribute="trailing" id="AWb-QS-uX1"/>
+                <constraint firstItem="ejC-dl-Fc4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="IaQ-lf-b4Z"/>
+                <constraint firstAttribute="trailing" secondItem="ejC-dl-Fc4" secondAttribute="trailing" id="JTQ-vj-IbF"/>
+                <constraint firstItem="ejC-dl-Fc4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Oy3-DE-l9S"/>
+                <constraint firstAttribute="centerX" secondItem="ejC-dl-Fc4" secondAttribute="centerX" id="VKd-UP-oza"/>
+                <constraint firstItem="ejC-dl-Fc4" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="19" id="f8H-fA-U05"/>
+                <constraint firstAttribute="centerX" secondItem="ejC-dl-Fc4" secondAttribute="centerX" id="o16-4o-buI"/>
                 <constraint firstAttribute="centerX" secondItem="sLZ-PC-uqW" secondAttribute="centerX" id="wyO-cD-g35"/>
+                <constraint firstItem="ejC-dl-Fc4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ylS-TE-TXW"/>
             </constraints>
         </view>
     </objects>
