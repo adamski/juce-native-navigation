@@ -118,15 +118,22 @@ public:
             #if JUCE_IOS
             iosWindow = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
             iosWindow.backgroundColor = [UIColor grayColor];
-            MainViewController *viewController = [[MainViewController alloc] init];
             
-            UIView* juceView = [[UIView alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
             MainContentComponent* mainComponent = new MainContentComponent();
+            UIView* juceView = [[UIView alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
             MainWindow::addComponentToUIView (*mainComponent, juceView);
-            //mainComponent->addToDesktop (0, juceView);
-            viewController.view = juceView;
+            MainViewController *viewController = [[MainViewController alloc] initWithContentView: juceView];
             
-            TestViewController *testViewController = [[TestViewController alloc] initWithNibName:@"TestViewController" bundle:nil];
+            [viewController addContentView];
+            
+            
+            
+
+            
+            
+            //viewController.contentView = juceView;
+            
+            //TestViewController *testViewController = [[TestViewController alloc] initWithNibName:@"TestViewController" bundle:nil];
             
             
             navController = [[UINavigationController alloc] initWithRootViewController: viewController];
@@ -136,25 +143,37 @@ public:
             
             
             
-            [iosWindow addSubview: [viewController view]];
+            //[iosWindow addSubview: [viewController view]];
             [iosWindow makeKeyAndVisible];
             
+            /*
             navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(juceView.bounds), 32.0)];
             [navBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
             [navBar setBarTintColor:[UIColor blackColor]];
             [navBar setTintColor:[UIColor grayColor]];
-            //navController.
+            
             NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                                                                                                       [UIColor whiteColor],NSForegroundColorAttributeName, nil]; //,
                                                        //                                                               //[UIColor grayColor], UITextAttributeTextShadowColor,
                                                        //                                                               //[NSValue valueWithUIOffset:UIOffsetMake(-1, 0)], UITextAttributeTextShadowOffset, nil];
                                                        //                    
-            //[[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+            [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
             
             UINavigationItem *navItem = [[UINavigationItem alloc] init];
             navItem.title = @"Test";
             [navBar setItems:@[navItem]];
             
+            ViewLoader *viewLoader = [[ViewLoader alloc] initWithNavigationController: navController];
+            //
+            UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
+                                                                            style:UIBarButtonItemStylePlain
+                                                                            target:viewLoader
+                                                                            action:@selector(nextView:)];
+            navItem.rightBarButtonItem = rightButton;
+            
+            //navController
+            //[juceView addSubview:navBar];
+            */
             #endif
             
 //            //UIView* view = (UIView*) getTopLevelComponent()->getWindowHandle();
