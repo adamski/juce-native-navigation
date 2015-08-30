@@ -4,11 +4,27 @@
               bundleIdentifier="com.yourcompany.iosNavigation" includeBinaryInAppConfig="1"
               jucerVersion="3.2.0">
   <MAINGROUP id="y4BUN6" name="iosNavigation">
+    <GROUP id="{6443DA23-7FBD-FEF3-DBD3-60354AAFD595}" name="Xcode Interface">
+      <FILE id="I5nHHk" name="TestViewController.xib" compile="0" resource="1"
+            file="Builds/iOS/TestViewController.xib"/>
+    </GROUP>
     <GROUP id="{E7EF3FA8-6B80-37FB-4D0A-E97DF6D9401D}" name="Source">
+      <FILE id="iCq8Au" name="iosMainWindow.h" compile="0" resource="0" file="Source/iosMainWindow.h"/>
+      <FILE id="izy6h3" name="iosMainWindow.mm" compile="1" resource="0"
+            file="Source/iosMainWindow.mm"/>
       <FILE id="KcwIra" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
       <FILE id="JZUwDP" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="VnREEN" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="TMzdEt" name="MainViewController.h" compile="0" resource="0"
+            file="Source/MainViewController.h"/>
+      <FILE id="V44RC0" name="MainViewController.m" compile="1" resource="0"
+            file="Source/MainViewController.m"/>
+      <FILE id="hBrjto" name="MainWindow.h" compile="0" resource="0" file="Source/MainWindow.h"/>
+      <FILE id="Iy6Dwe" name="TestViewController.h" compile="0" resource="0"
+            file="Source/TestViewController.h"/>
+      <FILE id="JTDskY" name="TestViewController.m" compile="1" resource="0"
+            file="Source/TestViewController.m"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
