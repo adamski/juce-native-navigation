@@ -11,6 +11,12 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+//==============================================================================
+/*
+ This class implements the iOS window that contains an instance of
+ our MainContentComponent class.
+ 
+ */
 
 class MainWindow    : public DocumentWindow
 {

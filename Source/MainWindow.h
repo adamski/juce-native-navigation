@@ -12,6 +12,12 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "MainComponent.h"
 
+//==============================================================================
+/*
+ This class implements the desktop window that contains an instance of
+ our MainContentComponent class.
+ */
+
 class MainWindow    : public DocumentWindow
 {
 public:

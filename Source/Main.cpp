@@ -57,15 +57,6 @@ public:
         // the other instance's command-line arguments were.
     }
 
-    //==============================================================================
-    /*
-        This class implements the desktop window that contains an instance of
-        our MainContentComponent class.
-     
-        TODO: Put this in a seperate include file (MainWindow.mm) for JUCE_IOS,
-        else the default MainWindow class (MainWindow.h) in another file.
-    
-    */
 
 private:
     ScopedPointer<MainWindow> mainWindow;
