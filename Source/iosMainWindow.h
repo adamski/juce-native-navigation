@@ -2,7 +2,7 @@
 //  iosMainWindow.h
 //  iosNavigation
 //
-//  Created by Adam Elemental on 30/08/2015.
+//  Created by Adam Wilson on 30/08/2015.
 //
 //
 
