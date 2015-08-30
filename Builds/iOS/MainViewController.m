@@ -38,33 +38,15 @@
 - (void) loadView {
     [super loadView];
 
-    
-    CGRect frame = self.view.bounds;
     CGFloat navHeight = 32.0;
-    
-    
-    navBar = [[UINavigationBar alloc] initWithFrame:frame];
-    frame.size = [navBar sizeThatFits:frame.size];
-    [navBar setFrame:frame];
-    [navBar setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [navBar setBarTintColor:[UIColor blackColor]];
-    [navBar setTintColor:[UIColor grayColor]];
-    
-    NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                               [UIColor whiteColor],NSForegroundColorAttributeName, nil]; //,
-    //                                                               //[UIColor grayColor], UITextAttributeTextShadowColor,
-    //                                                               //[NSValue valueWithUIOffset:UIOffsetMake(-1, 0)], UITextAttributeTextShadowOffset, nil];
-    //
-    [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
-    
+
     UIBarButtonItem * button = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay
-                                                                             target:self
-                                                                             action:@selector(nextView:)];
+                                                        target:self
+                                                        action:@selector(nextView:)];
     [[self navigationItem] setRightBarButtonItem:button];
     [button release];
-    [navBar setItems:[NSArray arrayWithObject:self.navigationItem]];
     
-    [self.view addSubview:navBar];
+    [[self navigationItem] setTitle: @"Hello"];
     
     if (_contentView == nil)
     {

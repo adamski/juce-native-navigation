@@ -62,6 +62,10 @@ public:
     /*
         This class implements the desktop window that contains an instance of
         our MainContentComponent class.
+     
+        TODO: Put this in a seperate include file (MainWindow.mm) for JUCE_IOS,
+        else the default MainWindow class (MainWindow.h) in another file.
+    
     */
     class MainWindow    : public DocumentWindow
     {
@@ -90,16 +94,24 @@ public:
             MainContentComponent* mainComponent = new MainContentComponent();
             UIView* juceView = [[UIView alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
             MainWindow::addComponentToUIView (*mainComponent, juceView);
-            MainViewController *viewController = [[MainViewController alloc] initWithContentView: juceView];
+            MainViewController* viewController = [[MainViewController alloc] initWithContentView: juceView];
             
             [viewController addContentView];
-            
             
             navController = [[UINavigationController alloc] initWithRootViewController: viewController];
             [iosWindow setRootViewController:navController];
             
+            // Style navigation bar
             
-            //[iosWindow addSubview: [viewController view]];
+            NSDictionary *navbarTitleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                       [UIColor whiteColor],NSForegroundColorAttributeName, nil]; //,
+            //                                                               //[UIColor grayColor], UITextAttributeTextShadowColor,
+            //                                                               //[NSValue valueWithUIOffset:UIOffsetMake(-1, 0)], UITextAttributeTextShadowOffset, nil];
+            //
+            [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+            UINavigationBar.appearance.barTintColor = [UIColor blackColor];
+            UINavigationBar.appearance.tintColor = [UIColor whiteColor];
+            
             [iosWindow makeKeyAndVisible];
             #endif
             
@@ -114,6 +126,7 @@ public:
             JUCEApplication::getInstance()->systemRequestedQuit();
         }
         
+        #if JUCE_IOS
         static void addComponentToUIView (Component& comp, UIView* uiView)
         {
             comp.addToDesktop (0, (void*) uiView);
@@ -121,6 +134,7 @@ public:
             comp.setBounds (uiView.bounds.origin.x, uiView.bounds.origin.y,
                             uiView.bounds.size.width, uiView.bounds.size.height);
         }
+        #endif
 
         /* Note: Be careful if you override any DocumentWindow methods - the base
            class uses a lot of them, so by overriding you might break its functionality.
@@ -133,7 +147,6 @@ public:
         #if JUCE_IOS
         UIWindow* iosWindow;
         UINavigationController* navController;
-        UINavigationBar* navBar;
         #endif
         JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
     };
