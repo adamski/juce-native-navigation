@@ -15,6 +15,8 @@
 
 @implementation MainViewController
 
+@synthesize contentView = _contentView;
+
 - (id) initWithContentView: (UIView *) contentView {
     self = [super init];
     
@@ -25,7 +27,8 @@
     return self;
 }
 
-- (void) addContentView {
+- (void) addContentView: (UIView *) contentView {
+    if (contentView != nil) _contentView = contentView;
     [self.view addSubview:_contentView];
 }
 

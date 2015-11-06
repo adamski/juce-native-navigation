@@ -16,7 +16,7 @@
 @property (nonatomic, retain) UIView* contentView;
 
 - (id) initWithContentView: (UIView *) contentView;
-- (void) addContentView;
+- (void) addContentView: (UIView *) contentView;
 - (void) nextView: (id) sender;
 
 @end

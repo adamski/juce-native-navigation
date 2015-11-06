@@ -1,0 +1,179 @@
+apply plugin: 'com.android.model.application'
+
+model {
+    android {
+        compileSdkVersion = 10
+        buildToolsVersion = "23.0.1"
+        defaultConfig.with {
+            applicationId = "com.yourcompany.nativenavigation"
+            minSdkVersion.apiLevel = 11
+            targetSdkVersion.apiLevel = 10
+        }
+    }
+
+    compileOptions.with {
+        sourceCompatibility = JavaVersion.VERSION_1_7
+            targetCompatibility = JavaVersion.VERSION_1_7
+    }
+
+    android.sources {
+        main {
+            jni {
+                source {
+                    exclude "**/JuceModules/"
+                }
+            }
+        }
+    }
+
+    android.ndk {
+        moduleName = "juce_jni"
+        stl = "gnustl_static"
+        toolchainVersion = 4.9
+        ext {
+            juceRootDir = "${project.rootDir}/../../../../".toString()
+            juceModuleDir = "${juceRootDir}/modules".toString()
+        }
+        cppFlags += "-fsigned-char"
+        cppFlags += "-fexceptions"
+        cppFlags += "-frtti"
+        cppFlags += "-std=gnu++11"
+        cppFlags += "-DJUCER_ANDROIDSTUDIO_4330F05B=1"
+        cppFlags += "-DJUCE_APP_VERSION=1.0.0"
+        cppFlags += "-DJUCE_APP_VERSION_HEX=0x10000"
+        cppFlags += "-DJUCE_ANDROID=1"
+        cppFlags += "-DJUCE_ANDROID_ACTIVITY_CLASSNAME=com_codegarden_nativenavigation_JuceActivity"
+        cppFlags += "-DJUCE_ANDROID_ACTIVITY_CLASSPATH=\"com/codegarden/nativenavigation/JuceActivity\""
+        cppFlags += "-I${project.rootDir}/app".toString()
+        cppFlags += "-I${ext.juceRootDir}".toString()
+        cppFlags += "-I${ext.juceModuleDir}".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/Source".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/Builds/iOS".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_basics/buffers".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_basics/midi".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_basics/effects".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_basics/sources".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_basics/synthesisers".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_basics".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_devices/audio_io".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_devices/midi_io".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_devices/sources".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_devices/audio_cd".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_devices/native".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_devices".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_formats/format".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_formats/codecs".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_formats/sampler".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_formats".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_processors/processors".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_processors/format".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_processors/format_types".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_processors/scanning".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_audio_processors".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/text".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/maths".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/memory".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/containers".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/threads".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/time".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/files".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/network".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/streams".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/logging".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/system".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/xml".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/javascript".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/zip".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/unit_tests".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/misc".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core/native".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_core".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_cryptography/encryption".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_cryptography/hashing".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_cryptography".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_data_structures/values".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_data_structures/undomanager".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_data_structures/app_properties".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_data_structures".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_events/messages".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_events/timers".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_events/broadcasters".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_events/interprocess".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_events/native".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_events".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_graphics/colour".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_graphics/contexts".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_graphics/images".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_graphics/image_formats".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_graphics/geometry".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_graphics/placement".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_graphics/fonts".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_graphics/effects".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_graphics/native".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_graphics".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/components".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/mouse".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/keyboard".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/widgets".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/windows".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/menus".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/layout".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/buttons".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/positioning".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/drawables".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/properties".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/lookandfeel".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/filebrowser".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/commands".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/misc".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/application".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics/native".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_basics".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_extra/code_editor".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_extra/documents".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_extra/embedding".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_extra/misc".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_extra/native".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_gui_extra".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_opengl/opengl".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_opengl/geometry".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_opengl/utils".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_opengl/native".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_opengl".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_video/playback".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_video/capture".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_video/native".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/../../juce/modules/juce_video".toString()
+        cppFlags += "-I/Users/adamelemental/dev/juce_projects/NativeNavigation/JuceLibraryCode".toString()
+        ldLibs += ["android", "EGL", "GLESv2", "log"]
+    }
+
+    android.buildTypes {
+        debug {
+            ndk.with {
+                debuggable = true
+                cppFlags += "-g"
+                cppFlags += "-DDEBUG=1"
+                cppFlags += "-D_DEBUG=1"
+            }
+        }
+        release {
+            minifyEnabled = true
+            proguardFiles += 'proguard-android-optimize.txt'
+            ndk.with {
+                cppFlags += "-DNDEBUG=1"
+            }
+        }
+    }
+    android.productFlavors {
+        create("armeabi") {
+            ndk.abiFilters += "armeabi"
+        }
+        create("armeabi-v7a") {
+            ndk.abiFilters += "armeabi-v7a"
+        }
+        create("x86") {
+            ndk.abiFilters += "x86"
+        }
+    }
+}

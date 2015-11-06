@@ -1,0 +1,1 @@
+/Users/adamelemental/dev/juce/modules/juce_video/native/juce_mac_QuickTimeMovieComponent.mm

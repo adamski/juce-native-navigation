@@ -1,0 +1,1 @@
+/Users/adamelemental/dev/juce/modules/juce_audio_devices/audio_cd/juce_AudioCDBurner.h

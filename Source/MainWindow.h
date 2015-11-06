@@ -22,17 +22,20 @@ class MainWindow    : public DocumentWindow
 {
 public:
     MainWindow (String name)  : DocumentWindow (name,
-                                                Colours::lightgrey,
+                                                Colours::black,
                                                 DocumentWindow::allButtons)
     {
         setUsingNativeTitleBar (true);
         setContentOwned (new MainContentComponent(), true);
         
-#if JUCE_ANDROID
+        #if JUCE_ANDROID
         setFullScreen (true);
-#else
+        #else
         setResizable (true, true);
-#endif
+        #endif
+
+        centreWithSize (getWidth(), getHeight());
+        setVisible (true);
     }
     
     void closeButtonPressed() override
@@ -51,7 +54,6 @@ public:
      */
     
 private:
-    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainWindow)
 };
 

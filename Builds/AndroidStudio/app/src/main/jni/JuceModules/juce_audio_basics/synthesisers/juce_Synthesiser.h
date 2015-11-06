@@ -1,0 +1,1 @@
+/Users/adamelemental/dev/juce/modules/juce_audio_basics/synthesisers/juce_Synthesiser.h

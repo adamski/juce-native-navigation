@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="NKEmyR" name="NativeNavigation" projectType="guiapp" version="1.0.0"
+              bundleIdentifier="com.yourcompany.nativeNavigation" includeBinaryInAppConfig="0"
+              jucerVersion="4.0.1">
+  <MAINGROUP id="y4BUN6" name="NativeNavigation">
+    <GROUP id="{E7EF3FA8-6B80-37FB-4D0A-E97DF6D9401D}" name="Source">
+      <FILE id="FVSt5Q" name="Scale.h" compile="0" resource="0" file="Source/Scale.h"/>
+      <GROUP id="{D746C483-A088-3457-E2D2-B5ED98D8CB81}" name="iOS">
+        <FILE id="yo1qhl" name="ScaleController.cpp" compile="1" resource="0"
+              file="Builds/iOS/ScaleController.cpp"/>
+        <FILE id="K1KajL" name="ScaleController.h" compile="0" resource="0"
+              file="Builds/iOS/ScaleController.h"/>
+        <FILE id="sSWsce" name="ScaleControllerObjC.h" compile="0" resource="0"
+              file="Builds/iOS/ScaleControllerObjC.h"/>
+        <FILE id="RM2uVc" name="ScaleControllerObjC.mm" compile="1" resource="0"
+              file="Builds/iOS/ScaleControllerObjC.mm"/>
+        <FILE id="I5nHHk" name="TestViewController.xib" compile="0" resource="1"
+              file="Builds/iOS/TestViewController.xib"/>
+        <FILE id="iCq8Au" name="iosMainWindow.h" compile="0" resource="0" file="Source/iosMainWindow.h"/>
+        <FILE id="izy6h3" name="iosMainWindow.mm" compile="1" resource="0"
+              file="Source/iosMainWindow.mm"/>
+        <FILE id="TMzdEt" name="MainViewController.h" compile="0" resource="0"
+              file="Source/MainViewController.h"/>
+        <FILE id="V44RC0" name="MainViewController.m" compile="1" resource="0"
+              file="Source/MainViewController.m"/>
+        <FILE id="Iy6Dwe" name="TestViewController.h" compile="0" resource="0"
+              file="Source/TestViewController.h"/>
+        <FILE id="JTDskY" name="TestViewController.m" compile="1" resource="0"
+              file="Source/TestViewController.m"/>
+      </GROUP>
+      <FILE id="KcwIra" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+      <FILE id="JZUwDP" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="VnREEN" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+      <FILE id="hBrjto" name="MainWindow.h" compile="0" resource="0" file="Source/MainWindow.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <EXPORTFORMATS>
+    <XCODE_IPHONE targetFolder="Builds/iOS">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" iosCompatibility="default" isDebug="1" optimisation="1"
+                       targetName="iosNavigation"/>
+        <CONFIGURATION name="Release" iosCompatibility="default" isDebug="0" optimisation="3"
+                       targetName="iosNavigation"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../juce/modules"/>
+        <MODULEPATH id="juce_events" path="../../juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../juce/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../juce/modules"/>
+        <MODULEPATH id="juce_video" path="../../juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../juce/modules"/>
+      </MODULEPATHS>
+    </XCODE_IPHONE>
+    <ANDROID targetFolder="Builds/Android" androidVersionCode="1" androidActivityClass="com.yourcompany.nativenavigation.JuceActivity"
+             androidMinimumSDK="10" androidInternetNeeded="1" androidKeyStore="${user.home}/.android/debug.keystore"
+             androidKeyStorePass="android" androidKeyAlias="androiddebugkey"
+             androidKeyAliasPass="android" androidCpp11="1" androidSDKPath=""
+             androidNDKPath="" androidActivitySubClassName="MainActivity">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" androidArchitectures="armeabi armeabi-v7a" isDebug="1"
+                       optimisation="1" targetName="NativeNavigation"/>
+        <CONFIGURATION name="Release" androidArchitectures="armeabi armeabi-v7a" isDebug="0"
+                       optimisation="3" targetName="NativeNavigation"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_video" path="../../juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../juce/modules"/>
+        <MODULEPATH id="juce_events" path="../../juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../juce/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../juce/modules"/>
+        <MODULEPATH id="juce_core" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../juce/modules"/>
+      </MODULEPATHS>
+    </ANDROID>
+    <ANDROIDSTUDIO androidVersionCode="1" androidActivityClass="com.codegarden.nativenavigation.JuceActivity"
+                   androidMinimumSDK="10" androidInternetNeeded="1" androidKeyStore="${user.home}/.android/debug.keystore"
+                   androidKeyStorePass="android" androidKeyAlias="androiddebugkey"
+                   androidKeyAliasPass="android" androidCpp11="1" targetFolder="Builds/AndroidStudio"
+                   androidSDKPath="/Users/adamelemental/dev/SDKs/android-sdk" androidNDKPath="/Users/adamelemental/dev/SDKs/android-ndk"
+                   androidActivitySubClassName="NativeActivity">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" androidArchitectures="armeabi armeabi-v7a x86" isDebug="1"
+                       optimisation="1" targetName="NativeNavigation"/>
+        <CONFIGURATION name="Release" androidArchitectures="armeabi armeabi-v7a x86"
+                       isDebug="0" optimisation="3" targetName="NativeNavigation"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_video" path="../../juce/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../juce/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../juce/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../juce/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../juce/modules"/>
+        <MODULEPATH id="juce_events" path="../../juce/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../juce/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../juce/modules"/>
+        <MODULEPATH id="juce_core" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../juce/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../juce/modules"/>
+      </MODULEPATHS>
+    </ANDROIDSTUDIO>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0"/>
+  </MODULES>
+  <JUCEOPTIONS/>
+  <LIVE_SETTINGS>
+    <OSX enableCxx11="1"/>
+  </LIVE_SETTINGS>
+</JUCERPROJECT>
