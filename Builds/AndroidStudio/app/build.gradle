@@ -2,14 +2,16 @@ apply plugin: 'com.android.model.application'
 
 model {
     android {
-        compileSdkVersion = 10
-        buildToolsVersion = "23.0.1"
+        compileSdkVersion = 23
+        buildToolsVersion = "23.0.2"
         defaultConfig.with {
             applicationId = "com.yourcompany.nativenavigation"
             minSdkVersion.apiLevel = 11
-            targetSdkVersion.apiLevel = 10
+            targetSdkVersion.apiLevel = 23
         }
     }
+
+
 
     compileOptions.with {
         sourceCompatibility = JavaVersion.VERSION_1_7
@@ -176,4 +178,12 @@ model {
             ndk.abiFilters += "x86"
         }
     }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    //testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:support-v4:23.1.0'
+    compile 'com.android.support:design:23.1.0'
 }

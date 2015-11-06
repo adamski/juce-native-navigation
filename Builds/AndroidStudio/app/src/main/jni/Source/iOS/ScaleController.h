@@ -1,1 +1,0 @@
-/Users/adamelemental/dev/juce_projects/NativeNavigation/Builds/iOS/ScaleController.h
