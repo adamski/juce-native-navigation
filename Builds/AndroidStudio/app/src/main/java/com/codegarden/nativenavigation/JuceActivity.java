@@ -24,6 +24,7 @@
 
 package com.codegarden.nativenavigation;
 
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -86,6 +87,8 @@ public class JuceActivity   extends AppCompatActivity
         LinearLayout detailContainer = (LinearLayout) findViewById(R.id.item_detail_container);
         detailContainer.removeAllViews();
         detailContainer.addView(viewHolder);
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+        appBarLayout.setExpanded(false, false);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
