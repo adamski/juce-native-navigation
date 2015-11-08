@@ -24,6 +24,8 @@
 
 package com.codegarden.nativenavigation;
 
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
@@ -54,6 +56,7 @@ import javax.microedition.khronos.opengles.GL10;
 import android.media.AudioManager;
 import android.media.MediaScannerConnection;
 import android.media.MediaScannerConnection.MediaScannerConnectionClient;
+import android.widget.LinearLayout;
 
 //==============================================================================
 public class JuceActivity   extends AppCompatActivity
@@ -67,9 +70,23 @@ public class JuceActivity   extends AppCompatActivity
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
-        super.onCreate (savedInstanceState);
+        super.onCreate(savedInstanceState);
 
-        //setContentView(R.layout.activity_item_detail);
+        isScreenSaverEnabled = true;
+        viewHolder = new ViewHolder (this);
+        Log.d("appDebug", "about to setContentView");
+        //setContentView (viewHolder);
+        Log.d("appDebug", "setContentView done");
+
+//        CoordinatorLayout cl = (CoordinatorLayout) LayoutInflater.from(this).inflate(R.layout.activity_item_detail, null);
+//        viewHolder.setLayoutParams(new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+//        cl.addView(viewHolder);
+
+        setContentView(R.layout.activity_item_detail);
+        LinearLayout detailContainer = (LinearLayout) findViewById(R.id.item_detail_container);
+        detailContainer.removeAllViews();
+        detailContainer.addView(viewHolder);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
 
@@ -85,9 +102,7 @@ public class JuceActivity   extends AppCompatActivity
         // Show the Up button in the action bar.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //--------------------------------------
-        isScreenSaverEnabled = true;
-        viewHolder = new ViewHolder (this);
-        setContentView (viewHolder);
+
 
         setVolumeControlStream (AudioManager.STREAM_MUSIC);
     }
@@ -188,11 +203,16 @@ public class JuceActivity   extends AppCompatActivity
 
     final class ViewHolder  extends ViewGroup
     {
-        public ViewHolder (Context context)
-        {
-            super (context);
-            setDescendantFocusability (ViewGroup.FOCUS_AFTER_DESCENDANTS);
-            setFocusable (false);
+        //private LayoutInflater inflater;
+
+        public ViewHolder (Context context) {
+            super(context);
+
+//            inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            this.addView(inflater.inflate(R.layout.activity_item_detail, null));
+
+            setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+            setFocusable(false);
         }
 
         protected final void onLayout (boolean changed, int left, int top, int right, int bottom)
