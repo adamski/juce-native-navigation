@@ -15,11 +15,16 @@ import java.util.List;
 public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemViewHolder>{
 
     List<Item> items;
+    private static ClickListener clickListener;
 
     ItemListAdapter(List<Item> items){
         this.items = items;
     }
 
+    public void setOnItemClickListener(ClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+    
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cardview, parent, false);
@@ -42,7 +47,16 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public static class ItemViewHolder extends RecyclerView.ViewHolder {
+    public Item getItem(int position) {
+        return items.get(position);
+    }
+
+    public interface ClickListener {
+        void onItemClick(int position, View view);
+    }
+
+    public static class ItemViewHolder extends RecyclerView.ViewHolder implements View
+            .OnClickListener {
         CardView cv;
         TextView itemTitle;
 
@@ -50,6 +64,12 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
             itemTitle = (TextView)itemView.findViewById(R.id.item_title);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            clickListener.onItemClick(getPosition(), view);
         }
     }
 

@@ -23,7 +23,7 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        container = (Container) findViewById(R.id.container);
+        //container = (Container) findViewById(R.id.container);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -36,9 +36,13 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerView rv = (RecyclerView)findViewById(R.id.rv);
-        LinearLayoutManager llm = new LinearLayoutManager(context);
-        rv.setLayoutManager(llm);
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.rv);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(llm);
+
+        ItemListAdapter adapter = new ItemListAdapter(items);
+        recyclerView.setAdapter(adapter);
+        initialiseData();
     }
 
     public Container getContainer() {
@@ -54,9 +58,9 @@ public class ListActivity extends AppCompatActivity {
 
     private void initialiseData() {
         items = new ArrayList<>();
-        items.add(new Item(1, "First");
-        items.add(new Item(2, "Second");
-        items.add(new Item(3, "Third");
+        items.add(new Item(1, "First"));
+        items.add(new Item(2, "Second"));
+        items.add(new Item(3, "Third"));
     }
 
 
