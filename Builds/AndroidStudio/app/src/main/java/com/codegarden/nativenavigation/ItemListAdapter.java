@@ -28,7 +28,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cardview, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.drawer_item, parent, false);
         ItemViewHolder personViewHolder = new ItemViewHolder(view);
         return personViewHolder;
     }
@@ -63,13 +63,13 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder implements View
             .OnClickListener {
-        CardView cv;
+        //CardView cv;
         TextView itemTitle;
 
         ItemViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv);
-            itemTitle = (TextView)itemView.findViewById(R.id.item_title);
+            //cv = (CardView)itemView.findViewById(R.id.cv);
+            itemTitle = (TextView)itemView.findViewById(android.R.id.text1);
             itemView.setOnClickListener(this);
         }
 
