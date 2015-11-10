@@ -36,13 +36,14 @@ public class ListActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.rv);
+        initialiseData();
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.item_list);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
 
         ItemListAdapter adapter = new ItemListAdapter(items);
         recyclerView.setAdapter(adapter);
-        initialiseData();
+
     }
 
     public Container getContainer() {

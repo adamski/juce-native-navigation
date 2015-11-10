@@ -26,8 +26,12 @@ package com.codegarden.nativenavigation;
 
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -52,6 +56,9 @@ import android.util.Log;
 import java.io.*;
 import java.net.URL;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 import android.media.AudioManager;
@@ -62,6 +69,16 @@ import android.widget.LinearLayout;
 //==============================================================================
 public class JuceActivity   extends AppCompatActivity
 {
+    private List<Item> items;
+
+    private void initialiseData() {
+        items = new ArrayList<>();
+        for (int i=1; i<=25; i++)
+        {
+            items.add(new Item(i, "Item "+(i)));
+        }
+    }
+
     //==============================================================================
     static
     {
@@ -103,7 +120,22 @@ public class JuceActivity   extends AppCompatActivity
         });
 
         // Show the Up button in the action bar.
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        initialiseData();
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.left_drawer);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(llm);
+
+        ItemListAdapter adapter = new ItemListAdapter(items);
+        recyclerView.setAdapter(adapter);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
         //--------------------------------------
 
 

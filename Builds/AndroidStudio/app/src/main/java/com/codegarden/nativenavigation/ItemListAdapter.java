@@ -2,6 +2,7 @@ package com.codegarden.nativenavigation;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
     public void setOnItemClickListener(ClickListener clickListener) {
         this.clickListener = clickListener;
     }
-    
+
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_cardview, parent, false);
@@ -39,7 +40,12 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
     @Override
     public int getItemCount() {
-        return items.size();
+        if (items != null) {
+            return items.size();
+        }
+        else {
+            return 0;
+        }
     }
 
     @Override
@@ -69,7 +75,8 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemVi
 
         @Override
         public void onClick(View view) {
-            clickListener.onItemClick(getPosition(), view);
+            //clickListener.onItemClick(getPosition(), view);
+            Log.d("ItemListAdapter", "row " + getAdapterPosition() + " clicked");
         }
     }
 
