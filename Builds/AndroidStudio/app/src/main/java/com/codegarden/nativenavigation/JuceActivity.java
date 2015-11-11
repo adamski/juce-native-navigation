@@ -646,7 +646,7 @@ public class JuceActivity   extends AppCompatActivity
         public OpenGLView createGLView()
         {
             OpenGLView glView = new OpenGLView (getContext());
-            addView (glView);
+            addView (glView); // this should be done via xml / findViewById
             return glView;
         }
     }

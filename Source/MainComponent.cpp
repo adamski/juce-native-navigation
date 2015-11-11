@@ -13,10 +13,15 @@
 MainContentComponent::MainContentComponent()
 {
     setSize (600, 400);
+    // add #ifdef JUCE_ANDROID ?
+    //openGLContext.attachTo (*this);
+//    openGLContext.attachTo (*getTopLevelComponent());
 }
 
 MainContentComponent::~MainContentComponent()
 {
+//    openGLContext.detach();
+
 }
 
 void MainContentComponent::paint (Graphics& g)
