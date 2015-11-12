@@ -88,11 +88,11 @@
       </MODULEPATHS>
     </ANDROID>
     <ANDROIDSTUDIO androidVersionCode="1" androidActivityClass="com.codegarden.nativenavigation.JuceActivity"
-                   androidMinimumSDK="23" androidInternetNeeded="1" androidKeyStore="${user.home}/.android/debug.keystore"
+                   androidMinimumSDK="11" androidInternetNeeded="1" androidKeyStore="${user.home}/.android/debug.keystore"
                    androidKeyStorePass="android" androidKeyAlias="androiddebugkey"
                    androidKeyAliasPass="android" androidCpp11="1" targetFolder="Builds/AndroidStudio"
                    androidSDKPath="/Users/adamelemental/dev/SDKs/android-sdk" androidNDKPath="/Users/adamelemental/dev/SDKs/android-ndk"
-                   androidActivitySubClassName="">
+                   androidActivitySubClassName="" toolset="" androidNdkPlatformVersion="19">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" androidArchitectures="armeabi armeabi-v7a x86" isDebug="1"
                        optimisation="1" targetName="NativeNavigation"/>
