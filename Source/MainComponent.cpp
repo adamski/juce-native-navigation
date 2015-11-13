@@ -146,13 +146,21 @@ void MainContentComponent::resized()
     // update their positions.
 }
 
-JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, getData, String, (JNIEnv* env, jclass clazz))
+// get data from a file instead?
+
+JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, getData, jbyteArray, (JNIEnv* env, jclass))
 {
     SharedResourcePointer<MainContentComponent> mainComponent;
-    return mainComponent->data.toJson();
+    String jsonData = mainComponent->data.toJson();
+    int byteCount = jsonData.length();
+    jbyte* pNativeString = (jbyte*) jsonData.toUTF8().getAddress();
+    jbyteArray bytes = env->NewByteArray(byteCount);
+    env->SetByteArrayRegion(bytes, 0, byteCount, pNativeString);
+
+    return bytes;
 }
 
-JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, setMessage, void, (JNIEnv* env, jclass clazz, jstring title, jstring message))
+JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, setMessage, void, (JNIEnv* env, jclass, jstring title, jstring message))
 {
     SharedResourcePointer<MainContentComponent> mainComponent;
 

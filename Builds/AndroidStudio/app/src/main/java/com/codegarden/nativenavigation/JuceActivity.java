@@ -54,6 +54,7 @@ import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import java.lang.Runnable;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -68,6 +69,9 @@ import android.media.MediaScannerConnection;
 import android.media.MediaScannerConnection.MediaScannerConnectionClient;
 
 import android.widget.LinearLayout;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 
 //==============================================================================
@@ -86,14 +90,108 @@ public class JuceActivity   extends AppCompatActivity
     private List<Message> messages;
 
     private void initialiseData() {
+        Gson gson = new Gson();
         messages = new ArrayList<>();
-        for (int i=1; i<=25; i++)
-        {
-            messages.add(new Message("Message "+(i), "Some message"));
-        }
+
+        Type collectionType = new TypeToken<List<Message>>(){}.getType();
+//        String json = JuceActivity.getData();
+        // load from file?
+        String json = "[\n" +
+                "  {\n" +
+                "    \"title\": \"Radiantix\",\n" +
+                "    \"message\": \"Occaecat ullamco amet ea sit ex incididunt enim.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Imaginart\",\n" +
+                "    \"message\": \"Officia eiusmod laborum qui irure tempor velit qui anim ullamco pariatur veniam occaecat ex.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Futurize\",\n" +
+                "    \"message\": \"Excepteur nulla ex sit cupidatat aute exercitation veniam.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Entogrok\",\n" +
+                "    \"message\": \"Esse ex id incididunt cillum eiusmod est sint proident consectetur.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Mitroc\",\n" +
+                "    \"message\": \"Deserunt proident adipisicing commodo aliquip irure quis non do nostrud labore ex officia esse.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Architax\",\n" +
+                "    \"message\": \"Eiusmod mollit duis esse magna ipsum pariatur minim quis ea cupidatat reprehenderit aliqua ipsum.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Geekmosis\",\n" +
+                "    \"message\": \"Duis exercitation fugiat id sit ipsum adipisicing cupidatat irure anim.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Baluba\",\n" +
+                "    \"message\": \"Commodo ut proident et excepteur ut ex ex.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Zillactic\",\n" +
+                "    \"message\": \"Non exercitation deserunt aliquip enim deserunt ut fugiat voluptate quis esse fugiat aute cillum laborum.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Dragbot\",\n" +
+                "    \"message\": \"Consectetur non eu in irure Lorem consequat.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Qualitern\",\n" +
+                "    \"message\": \"Nisi enim anim commodo ea ullamco magna.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Hinway\",\n" +
+                "    \"message\": \"Quis voluptate ex eu culpa nisi pariatur anim.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Hairport\",\n" +
+                "    \"message\": \"Culpa sunt eu excepteur ullamco excepteur incididunt esse ut amet dolore elit duis mollit.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Zolarity\",\n" +
+                "    \"message\": \"Irure sit laboris adipisicing consequat ea dolor pariatur ullamco.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Accidency\",\n" +
+                "    \"message\": \"Minim ut eu nostrud esse ex labore.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Quadeebo\",\n" +
+                "    \"message\": \"Reprehenderit minim Lorem proident tempor.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Pathways\",\n" +
+                "    \"message\": \"Reprehenderit fugiat velit est in fugiat labore dolor qui reprehenderit ad aute.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Solgan\",\n" +
+                "    \"message\": \"Nisi ut occaecat duis mollit eiusmod exercitation pariatur qui ea.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Buzzworks\",\n" +
+                "    \"message\": \"Qui irure sint occaecat cillum aute est nisi ipsum fugiat duis.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Senmei\",\n" +
+                "    \"message\": \"Aliqua aliquip nulla adipisicing reprehenderit tempor officia minim.\"\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"title\": \"Mangelica\",\n" +
+                "    \"message\": \"Pariatur ipsum qui eu sunt duis excepteur ipsum.\"\n" +
+                "  }\n" +
+                "]";
+        messages = gson.fromJson(json, collectionType);
+
+//        for (int i=1; i<=25; i++)
+//        {
+//            messages.add(new Message("Message "+(i), "Some message"));
+//        }
     }
 
     public static native void setMessage (String title, String message);
+    public static native String getData();
 
     @Override
     public void onCreate (Bundle savedInstanceState)
