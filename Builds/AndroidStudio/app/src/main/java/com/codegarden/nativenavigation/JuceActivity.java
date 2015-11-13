@@ -93,6 +93,8 @@ public class JuceActivity   extends AppCompatActivity
         }
     }
 
+    public static native void setMessage (String title, String message);
+
     @Override
     public void onCreate (Bundle savedInstanceState)
     {

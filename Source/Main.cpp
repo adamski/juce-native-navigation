@@ -9,6 +9,7 @@
 */
 
 #include "../JuceLibraryCode/JuceHeader.h"
+
 #if JUCE_IOS
 #include "iosMainWindow.h"
 #else
@@ -17,11 +18,11 @@
 
 
 //==============================================================================
-class iosNavigationApplication  : public JUCEApplication
+class NativeNavigationApplication  : public JUCEApplication
 {
 public:
     //==============================================================================
-    iosNavigationApplication() {}
+    NativeNavigationApplication() {}
 
     const String getApplicationName() override       { return ProjectInfo::projectName; }
     const String getApplicationVersion() override    { return ProjectInfo::versionString; }
@@ -57,7 +58,6 @@ public:
         // the other instance's command-line arguments were.
     }
 
-
 private:
     ScopedPointer<MainWindow> mainWindow;
 
@@ -65,4 +65,4 @@ private:
 
 //==============================================================================
 // This macro generates the main() routine that launches the app.
-START_JUCE_APPLICATION (iosNavigationApplication)
+START_JUCE_APPLICATION (NativeNavigationApplication)

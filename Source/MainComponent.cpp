@@ -8,6 +8,18 @@
 
 #include "MainComponent.h"
 
+#if defined(JUCE_ANDROID)
+
+namespace juce
+{
+
+#include "juce_android_JNIHelpers.h"
+//#include "../JuceLibraryCode/modules/juce_core/native/juce_android_JNIHelpers.h"
+
+}
+
+#endif
+
 //==============================================================================
 MainContentComponent::MainContentComponent()
 {
@@ -118,12 +130,12 @@ void MainContentComponent::paint (Graphics& g)
 
     g.setFont (Font (24.0f));
     g.setColour (Colours::orange);
-    String title(data.getValueTree().getChild(0).getProperty(Ids::title).toString());
+//    String title(data.getValueTree().getChild(0).getProperty(Ids::title).toString());
     g.drawText (title, getLocalBounds(), Justification::centredTop, true);
 
     g.setFont (Font (16.0f));
     g.setColour (Colours::white);
-    String message(data.getValueTree().getChild(0).getProperty(Ids::message).toString());
+//    String message(data.getValueTree().getChild(0).getProperty(Ids::message).toString());
     g.drawText (message, getLocalBounds(), Justification::centred, true);
 }
 
@@ -132,4 +144,19 @@ void MainContentComponent::resized()
     // This is called when the MainContentComponent is resized.
     // If you add any child components, this is where you should
     // update their positions.
+}
+
+JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, getData, String, (JNIEnv* env, jclass clazz))
+{
+    SharedResourcePointer<MainContentComponent> mainComponent;
+    return mainComponent->data.toJson();
+}
+
+JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, setMessage, void, (JNIEnv* env, jclass clazz, jstring title, jstring message))
+{
+    SharedResourcePointer<MainContentComponent> mainComponent;
+
+    mainComponent->title = juceString (env, title);
+    mainComponent->message = juceString (env, message);
+    mainComponent->repaint();
 }

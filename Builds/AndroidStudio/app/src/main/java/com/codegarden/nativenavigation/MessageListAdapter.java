@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.MessageViewHolder>{
 
-    List<Message> messages;
+    static List<Message> messages;
     private static ClickListener clickListener;
 
     MessageListAdapter(List<Message> messages){
@@ -76,6 +76,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         public void onClick(View view) {
             //clickListener.onItemClick(getPosition(), view);
             Log.d("MessageListAdapter", "row " + getAdapterPosition() + " clicked");
+            JuceActivity.setMessage(messages.get(getAdapterPosition()).title, messages.get(getAdapterPosition()).message);
         }
     }
 
