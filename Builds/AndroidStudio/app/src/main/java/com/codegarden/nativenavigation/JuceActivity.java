@@ -25,9 +25,7 @@
 package com.codegarden.nativenavigation;
 
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,33 +40,49 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
+import android.os.Handler;
+import android.os.ParcelUuid;
 import android.view.*;
 import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.graphics.*;
-import android.opengl.*;
 import android.text.ClipboardManager;
 import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import java.lang.Runnable;
+import java.util.List;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.TimerTask;
 import java.io.*;
 import java.net.URL;
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
 import android.media.AudioManager;
 import android.media.MediaScannerConnection;
 import android.media.MediaScannerConnection.MediaScannerConnectionClient;
+
 import android.widget.LinearLayout;
+
 
 //==============================================================================
 public class JuceActivity   extends AppCompatActivity
 {
+    //==============================================================================
+    static
+    {
+        System.loadLibrary ("juce_jni");
+    }
+
+    //==============================================================================
+
+    //==============================================================================
+
     private List<Message> messages;
 
     private void initialiseData() {
@@ -79,30 +93,19 @@ public class JuceActivity   extends AppCompatActivity
         }
     }
 
-    //==============================================================================
-    static
-    {
-        System.loadLibrary ("juce_jni");
-    }
-
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
+        super.onCreate (savedInstanceState);
 
         isScreenSaverEnabled = true;
         viewHolder = new ViewHolder (this);
-        Log.d("appDebug", "about to setContentView");
-        //setContentView (viewHolder);
-        Log.d("appDebug", "setContentView done");
+        setContentView (viewHolder);
 
-//        CoordinatorLayout cl = (CoordinatorLayout) LayoutInflater.from(this).inflate(R.layout.activity_item_detail, null);
-//        viewHolder.setLayoutParams(new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-//        cl.addView(viewHolder);
-
+        // -- Custom native UI
         setContentView(R.layout.main_activity);
         LinearLayout juceViewContainer = (LinearLayout) findViewById(R.id.juce_view_container);
-        //juceViewContainer.removeAllViews();
+        juceViewContainer.removeAllViews();
         juceViewContainer.addView(viewHolder);
         AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         appBarLayout.setExpanded(false, false);
@@ -123,11 +126,11 @@ public class JuceActivity   extends AppCompatActivity
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initialiseData();
-        RecyclerView recyclerView = (RecyclerView) findViewById (R.id.left_drawer);
-        LinearLayoutManager llm = new LinearLayoutManager (this);
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.left_drawer);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
 
-        MessageListAdapter adapter = new MessageListAdapter (messages);
+        MessageListAdapter adapter = new MessageListAdapter(messages);
         recyclerView.setAdapter(adapter);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -137,7 +140,7 @@ public class JuceActivity   extends AppCompatActivity
         toggle.syncState();
 
         //--------------------------------------
-
+        // -------------------
 
         setVolumeControlStream (AudioManager.STREAM_MUSIC);
     }
@@ -154,9 +157,6 @@ public class JuceActivity   extends AppCompatActivity
     @Override
     protected void onPause()
     {
-        if (viewHolder != null)
-            viewHolder.onPause();
-
         suspendApp();
         super.onPause();
     }
@@ -165,10 +165,6 @@ public class JuceActivity   extends AppCompatActivity
     protected void onResume()
     {
         super.onResume();
-
-        if (viewHolder != null)
-            viewHolder.onResume();
-
         resumeApp();
     }
 
@@ -212,6 +208,7 @@ public class JuceActivity   extends AppCompatActivity
     //==============================================================================
     private ViewHolder viewHolder;
     private boolean isScreenSaverEnabled;
+    private java.util.Timer keepAliveTimer;
 
     public final ComponentPeerView createNewView (boolean opaque, long host)
     {
@@ -228,7 +225,7 @@ public class JuceActivity   extends AppCompatActivity
             group.removeView (view);
     }
 
-    public final void deleteOpenGLView (OpenGLView view)
+    public final void deleteNativeSurfaceView (NativeSurfaceView view)
     {
         ViewGroup group = (ViewGroup) (view.getParent());
 
@@ -238,16 +235,11 @@ public class JuceActivity   extends AppCompatActivity
 
     final class ViewHolder  extends ViewGroup
     {
-        //private LayoutInflater inflater;
-
-        public ViewHolder (Context context) {
-            super(context);
-
-//            inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//            this.addView(inflater.inflate(R.layout.activity_item_detail, null));
-
-            setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
-            setFocusable(false);
+        public ViewHolder (Context context)
+        {
+            super (context);
+            setDescendantFocusability (ViewGroup.FOCUS_AFTER_DESCENDANTS);
+            setFocusable (false);
         }
 
         protected final void onLayout (boolean changed, int left, int top, int right, int bottom)
@@ -260,28 +252,6 @@ public class JuceActivity   extends AppCompatActivity
                 callAppLauncher();
             }
         }
-
-        public final void onPause()
-        {
-            for (int i = getChildCount(); --i >= 0;)
-            {
-                View v = getChildAt (i);
-
-                if (v instanceof ComponentPeerView)
-                    ((ComponentPeerView) v).onPause();
-            }
-        }
-
-        public final void onResume()
-        {
-            for (int i = getChildCount(); --i >= 0;)
-            {
-                View v = getChildAt (i);
-
-                if (v instanceof ComponentPeerView)
-                    ((ComponentPeerView) v).onResume();
-             }
-         }
 
         private final int getDPI()
         {
@@ -304,14 +274,46 @@ public class JuceActivity   extends AppCompatActivity
         if (isScreenSaverEnabled != enabled)
         {
             isScreenSaverEnabled = enabled;
+
+            if (keepAliveTimer != null)
+            {
+                keepAliveTimer.cancel();
+                keepAliveTimer = null;
+            }
+
             if (enabled)
+            {
                 getWindow().clearFlags (WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            }
             else
+            {
                 getWindow().addFlags (WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+                // If no user input is received after about 3 seconds, the OS will lower the
+                // task's priority, so this timer forces it to be kept active.
+                keepAliveTimer = new java.util.Timer();
+
+                keepAliveTimer.scheduleAtFixedRate (new TimerTask()
+                {
+                    @Override
+                    public void run()
+                    {
+                        android.app.Instrumentation instrumentation = new android.app.Instrumentation();
+
+                        try
+                        {
+                            instrumentation.sendKeyDownUpSync (KeyEvent.KEYCODE_UNKNOWN);
+                        }
+                        catch (Exception e)
+                        {
+                        }
+                    }
+                }, 2000, 2000);
+            }
         }
     }
 
-    public final boolean getScreenSaver ()
+    public final boolean getScreenSaver()
     {
         return isScreenSaverEnabled;
     }
@@ -620,70 +622,83 @@ public class JuceActivity   extends AppCompatActivity
         {
             return true; //xxx needs to check overlapping views
         }
-
-        public final void onPause()
-        {
-            for (int i = getChildCount(); --i >= 0;)
-            {
-                View v = getChildAt (i);
-
-                if (v instanceof OpenGLView)
-                    ((OpenGLView) v).onPause();
-            }
-        }
-
-        public final void onResume()
-        {
-            for (int i = getChildCount(); --i >= 0;)
-            {
-                View v = getChildAt (i);
-
-                if (v instanceof OpenGLView)
-                    ((OpenGLView) v).onResume();
-            }
-        }
-
-        public OpenGLView createGLView()
-        {
-            OpenGLView glView = new OpenGLView (getContext());
-            addView (glView); // this should be done via xml / findViewById
-            return glView;
-        }
     }
 
     //==============================================================================
-    public final class OpenGLView   extends GLSurfaceView
-                                    implements GLSurfaceView.Renderer
+    public static class NativeSurfaceView    extends SurfaceView
+                                          implements SurfaceHolder.Callback
     {
-        OpenGLView (Context context)
+        private long nativeContext = 0;
+
+        NativeSurfaceView (Context context, long nativeContextPtr)
         {
             super (context);
-            setEGLContextClientVersion (2);
-            setRenderer (this);
-            setRenderMode (RENDERMODE_WHEN_DIRTY);
+            nativeContext = nativeContextPtr;
+        }
+
+        public Surface getNativeSurface()
+        {
+            Surface retval = null;
+
+            SurfaceHolder holder = getHolder();
+            if (holder != null)
+                retval = holder.getSurface();
+
+            return retval;
+        }
+
+        //==============================================================================
+        @Override
+        public void surfaceChanged (SurfaceHolder holder, int format, int width, int height)
+        {
+            surfaceChangedNative (nativeContext, holder, format, width, height);
         }
 
         @Override
-        public void onSurfaceCreated (GL10 unused, EGLConfig config)
+        public void surfaceCreated (SurfaceHolder holder)
         {
-            contextCreated();
+            surfaceCreatedNative (nativeContext, holder);
         }
 
         @Override
-        public void onSurfaceChanged (GL10 unused, int width, int height)
+        public void surfaceDestroyed (SurfaceHolder holder)
         {
-            contextChangedSize();
+            surfaceDestroyedNative (nativeContext, holder);
         }
 
         @Override
-        public void onDrawFrame (GL10 unused)
+        protected void dispatchDraw (Canvas canvas)
         {
-            render();
+            super.dispatchDraw (canvas);
+            dispatchDrawNative (nativeContext, canvas);
         }
 
-        private native void contextCreated();
-        private native void contextChangedSize();
-        private native void render();
+        //==============================================================================
+        @Override
+        protected void onAttachedToWindow ()
+        {
+            super.onAttachedToWindow();
+            getHolder().addCallback (this);
+        }
+
+        @Override
+        protected void onDetachedFromWindow ()
+        {
+            super.onDetachedFromWindow();
+            getHolder().removeCallback (this);
+        }
+
+        //==============================================================================
+        private native void dispatchDrawNative (long nativeContextPtr, Canvas canvas);
+        private native void surfaceCreatedNative (long nativeContextptr, SurfaceHolder holder);
+        private native void surfaceDestroyedNative (long nativeContextptr, SurfaceHolder holder);
+        private native void surfaceChangedNative (long nativeContextptr, SurfaceHolder holder,
+                                                  int format, int width, int height);
+    }
+
+    public NativeSurfaceView createNativeSurfaceView(long nativeSurfacePtr)
+    {
+        return new NativeSurfaceView (this, nativeSurfacePtr);
     }
 
     //==============================================================================
@@ -1018,5 +1033,71 @@ public class JuceActivity   extends AppCompatActivity
 
         return null;
     }
+
+    public final int getAndroidSDKVersion()
+    {
+        return android.os.Build.VERSION.SDK_INT;
+    }
+
+    public final String audioManagerGetProperty (String property)
+    {
+        Object obj = getSystemService (AUDIO_SERVICE);
+        if (obj == null)
+            return null;
+
+        java.lang.reflect.Method method;
+        try {
+            method = obj.getClass().getMethod ("getProperty", String.class);
+        } catch (SecurityException e) {
+            return null;
+        } catch (NoSuchMethodException e) {
+            return null;
+        }
+
+        if (method == null)
+            return null;
+
+        try {
+            return (String) method.invoke (obj, property);
+        } catch (java.lang.IllegalArgumentException e) {
+        } catch (java.lang.IllegalAccessException e) {
+        } catch (java.lang.reflect.InvocationTargetException e) {
+        }
+
+        return null;
+    }
+
+    public final int setCurrentThreadPriority (int priority)
+    {
+        android.os.Process.setThreadPriority (android.os.Process.myTid(), priority);
+        return android.os.Process.getThreadPriority (android.os.Process.myTid());
+    }
+
+    public final boolean hasSystemFeature (String property)
+    {
+        return getPackageManager().hasSystemFeature (property);
+    }
+
+    private static class JuceThread extends Thread
+    {
+        public JuceThread (long host)
+        {
+            _this = host;
+        }
+
+        public void run()
+        {
+            runThread(_this);
+        }
+
+        private native void runThread (long host);
+        private long _this;
+    }
+
+    public final Thread createNewThread(long host)
+    {
+        return new JuceThread(host);
+    }
+
 }
 

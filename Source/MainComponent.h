@@ -28,7 +28,7 @@ public:
     void resized();
 
 private:
-    OpenGLContext openGLContext;
+    //OpenGLContext openGLContext;
     Data data;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainContentComponent)

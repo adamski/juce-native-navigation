@@ -1,1 +1,0 @@
-/Users/adamelemental/dev/juce/modules/juce_video/playback/juce_QuickTimeMovieComponent.h
