@@ -158,22 +158,9 @@ JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, getJsonDataBytes, jbyteArray
     DBG (jsonData);
 
     int byteCount = jsonData.length();
-    const jbyte* pNativeString = reinterpret_cast<const jbyte*> ((const char *) jsonData.toUTF8());
-    jbyteArray bytes = env->NewByteArray (byteCount);
-    env->SetByteArrayRegion (bytes, 0, byteCount, pNativeString);
-
-    return bytes;
-}
-
-JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, getMessageTitleBytes, jbyteArray, (JNIEnv* env, jclass))
-{
-    SharedResourcePointer<MainContentComponent> mainComponent;
-    String title = mainComponent->title;
-
-    int byteCount = title.length();
-    const jbyte* pNativeString = reinterpret_cast<const jbyte*> ((const char *) title.toUTF8());
-    jbyteArray bytes = env->NewByteArray (byteCount);
-    env->SetByteArrayRegion (bytes, 0, byteCount, pNativeString);
+    const jbyte* nativeString = reinterpret_cast<const jbyte*> ((const char *) jsonData.toUTF8());
+    jbyteArray bytes = env->NewByteArray(byteCount);
+    env->SetByteArrayRegion(bytes, 0, byteCount, nativeString);
 
     return bytes;
 }

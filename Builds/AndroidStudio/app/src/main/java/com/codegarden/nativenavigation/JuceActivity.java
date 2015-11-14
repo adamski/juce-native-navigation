@@ -111,11 +111,7 @@ public class JuceActivity   extends AppCompatActivity
     }
     private static native byte[] getJsonDataBytes();
 
-    public static String getMessageTitle()
-    {
-        return new String(getMessageTitleBytes(), Charset.forName("UTF-8"));
-    }
-    private static native byte[] getMessageTitleBytes();
+    public static native void setMessage (String title, String message);
 
     @Override
     public void onCreate (Bundle savedInstanceState)
@@ -171,7 +167,7 @@ public class JuceActivity   extends AppCompatActivity
         recyclerView.setAdapter(adapter);
         //--------------------------------------
 
-        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        setVolumeControlStream (AudioManager.STREAM_MUSIC);
     }
 
     @Override
