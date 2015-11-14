@@ -111,8 +111,6 @@ public class JuceActivity   extends AppCompatActivity
     }
     private static native byte[] getJsonDataBytes();
 
-    public static native void setMessage (String title, String message);
-
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
