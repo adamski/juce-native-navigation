@@ -81,11 +81,10 @@ public:
 
         for (int i = 0; i < dataValueTree.getNumChildren(); ++i)
         {
-            var title = dataValueTree.getChild(i).getProperty(Ids::title);
-            var message = dataValueTree.getChild(i).getProperty(Ids::message);
-            var item;
-            item.append (title);
-            item.append (message);
+            DynamicObject* obj = new DynamicObject();
+            obj->setProperty (Ids::title, dataValueTree.getChild(i).getProperty(Ids::title));
+            obj->setProperty (Ids::message, dataValueTree.getChild(i).getProperty(Ids::message));
+            var item (obj);
             varItems.add (item);
         }
 

@@ -146,16 +146,21 @@ void MainContentComponent::resized()
     // update their positions.
 }
 
-// get data from a file instead?
-
-JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, getData, jbyteArray, (JNIEnv* env, jclass))
+JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, getJsonDataBytes, jbyteArray, (JNIEnv* env, jclass))
 {
     SharedResourcePointer<MainContentComponent> mainComponent;
     String jsonData = mainComponent->data.toJson();
+
+    DBG (jsonData);
+
     int byteCount = jsonData.length();
-    jbyte* pNativeString = (jbyte*) jsonData.toUTF8().getAddress();
+    DBG ("About to do the cast..");
+    const jbyte* pNativeString = reinterpret_cast<const jbyte*>( (const char *) jsonData.toUTF8());
+    DBG ("Did the cast");
     jbyteArray bytes = env->NewByteArray(byteCount);
+    DBG ("Done NewByteArray");
     env->SetByteArrayRegion(bytes, 0, byteCount, pNativeString);
+    DBG ("Done SetByteArrayRegion");
 
     return bytes;
 }
