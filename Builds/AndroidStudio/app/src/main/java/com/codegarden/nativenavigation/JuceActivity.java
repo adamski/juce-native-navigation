@@ -122,8 +122,8 @@ public class JuceActivity   extends AppCompatActivity
         LinearLayout juceViewContainer = (LinearLayout) findViewById(R.id.juce_view_container);
         juceViewContainer.removeAllViews();
         juceViewContainer.addView(viewHolder);
-//        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
-//        appBarLayout.setExpanded(false, false);
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+        appBarLayout.setExpanded(false, false);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
