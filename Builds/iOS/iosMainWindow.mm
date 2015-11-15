@@ -9,7 +9,7 @@
 #ifndef NativeNavigation_iosMainWindow_mm
 #define NativeNavigation_iosMainWindow_mm
 
-#ifdef JUCE_IOS
+//#if JUCE_IOS
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "NativeNavigation-Swift.h"
@@ -39,7 +39,7 @@ MainWindow::MainWindow (String name)  : DocumentWindow (name,
     window.backgroundColor = [UIColor grayColor];
     
     UIView* juceView = [[UIView alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
-    MainWindow::addComponentToUIView (mainComponent, juceView);
+    MainWindow::addComponentToUIView (mainComponent.getObject(), juceView);
     JuceViewController* juceViewController = [[JuceViewController alloc] initWithContentView: juceView];
     
     juceViewController.contentView = juceView;
@@ -96,6 +96,6 @@ void MainWindow::addComponentToUIView (Component& component, void* uiView)
 }
 
 
-#endif
+//#endif
 
 #endif
