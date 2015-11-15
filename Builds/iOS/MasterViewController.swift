@@ -47,12 +47,32 @@ class MasterViewController: UITableViewController
                     for item in jsonArray {
                         messages.append(Message(json: item as! NSDictionary));
                     }
+                    print (messages.debugDescription);
                 }
             }
             catch let error as NSError {
                 print(error)
             }
         }
+    }
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return messages.count
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell     {
+        
+        let cell: UITableViewCell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "cell")
+        
+        if let message = self.messages[indexPath.row] as Message? {
+            cell.textLabel!.text = message.title
+        } else {
+            cell.textLabel!.text = "Untitled"
+        }
+        
+        return cell
+        
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
