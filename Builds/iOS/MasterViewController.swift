@@ -10,15 +10,18 @@ import UIKit
 
 class MasterViewController: UITableViewController
 {
-    var dataController: DataControllerObjC!
+//    var dataController: DataControllerObjC
     var juceViewController: JuceViewController?
     var messages = [Message]()
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Messages"
         //self.tableView.delegate = self
+        self.loadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -26,9 +29,11 @@ class MasterViewController: UITableViewController
         // Dispose of any resources that can be recreated.
     }
     
-    func loadData(dataAsJson: String) {
-        
+    func loadData() {
+        print ("loadData");
+        let dataController = DataControllerObjC()
         let jsonString = dataController.getJsonData()
+        print (jsonString)
         
         let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)
         
@@ -53,6 +58,8 @@ class MasterViewController: UITableViewController
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 
         let message = messages[indexPath.row]
+        let dataController = DataControllerObjC()
+        
         dataController.setMessage(message.title, message.message)
         juceViewController!.setTitle()
 

@@ -22,6 +22,7 @@ DataController::DataController()
 const char* DataController::getJsonData()
 {
     SharedResourcePointer<MainContentComponent> mainComponent;
+    DBG (String(mainComponent->data.toJson().toRawUTF8()));
     return mainComponent->data.toJson().toRawUTF8();
 }
 

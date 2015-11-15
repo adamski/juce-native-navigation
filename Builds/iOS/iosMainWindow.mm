@@ -39,9 +39,9 @@ MainWindow::MainWindow (String name)  : DocumentWindow (name,
     window.backgroundColor = [UIColor grayColor];
     
     UIView* juceView = [[UIView alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
-    //MainWindow::addComponentToUIView (mainComponent.getObject(), juceView);
-    MainContentComponent* mainComponent = new MainContentComponent();
-    MainWindow::addComponentToUIView (*mainComponent, juceView);
+    MainWindow::addComponentToUIView (mainComponent.getObject(), juceView);
+    //MainContentComponent* mainComponent = new MainContentComponent();
+    //MainWindow::addComponentToUIView (*mainComponent, juceView);
     JuceViewController* juceViewController = [[JuceViewController alloc] initWithContentView: juceView];
     
     juceViewController.contentView = juceView;

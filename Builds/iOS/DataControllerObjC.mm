@@ -39,13 +39,16 @@
 
 - (NSString*)getTitle
 {
-    NSString* titleString = [ NSString stringWithUTF8String:wrapped->getTitle() ] ;
+    NSString* titleString = [ NSString stringWithUTF8String:wrapped->getTitle() ];
     return titleString;
 }
 
 - (NSString*)getJsonData
 {
-    NSString* jsonDataString = [ NSString stringWithUTF8String:wrapped->getJsonData() ] ;
+    const char* jsonCharPointer = wrapped->getJsonData();
+//    NSString* jsonDataString = [ NSString stringWithUTF8String: jsonCharPointer];
+    NSString* jsonDataString = [ NSString stringWithFormat:@"%s", jsonCharPointer];
+//    NSLog(@"jsonDataString == %@",jsonDataString);
     return jsonDataString;
 }
 
