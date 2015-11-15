@@ -1,13 +1,13 @@
 //
 //  MainWindow.h
-//  iosNavigation
+//  NativeNavigation
 //
 //  Created by Adam Elemental on 30/08/2015.
 //
 //
 
-#ifndef iosNavigation_MainWindow_h
-#define iosNavigation_MainWindow_h
+#ifndef NativeNavigation_MainWindow_h
+#define NativeNavigation_MainWindow_h
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "MainComponent.h"

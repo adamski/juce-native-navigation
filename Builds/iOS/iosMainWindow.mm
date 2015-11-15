@@ -1,13 +1,13 @@
 //
 //  MainWindow.cpp
-//  JustTuner
+//  NativeNavigation
 //
 //  Created by Adam Elemental on 30/08/2015.
 //
 //
 
-#ifndef JustTuner_iosMainWindow_mm
-#define JustTuner_iosMainWindow_mm
+#ifndef NativeNavigation_iosMainWindow_mm
+#define NativeNavigation_iosMainWindow_mm
 
 #ifdef JUCE_IOS
 #import <UIKit/UIKit.h>
