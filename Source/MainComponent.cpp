@@ -146,6 +146,8 @@ void MainContentComponent::resized()
     // update their positions.
 }
 
+#if JUCE_ANDROID
+
 JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, getJsonDataBytes, jbyteArray, (JNIEnv* env, jclass))
 {
     SharedResourcePointer<MainContentComponent> mainComponent;
@@ -173,3 +175,5 @@ JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, setMessage, void, (JNIEnv* e
     mainComponent->message = juceString (env, message);
     mainComponent->repaint();
 }
+
+#endif

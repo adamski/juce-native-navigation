@@ -1,5 +1,6 @@
 package com.codegarden.nativenavigation;
 
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     static List<Message> messages;
     private static ClickListener clickListener;
+    private DrawerLayout drawerLayout;
 
     MessageListAdapter(List<Message> messages){
         this.messages = messages;
@@ -77,6 +79,8 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
             //clickListener.onItemClick(getPosition(), view);
             Log.d("MessageListAdapter", "row " + getAdapterPosition() + " clicked");
             JuceActivity.setMessage(messages.get(getAdapterPosition()).title, messages.get(getAdapterPosition()).message);
+
+//            drawerLayout.closeDrawers();
         }
     }
 
