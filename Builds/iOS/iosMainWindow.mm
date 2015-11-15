@@ -39,7 +39,9 @@ MainWindow::MainWindow (String name)  : DocumentWindow (name,
     window.backgroundColor = [UIColor grayColor];
     
     UIView* juceView = [[UIView alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
-    MainWindow::addComponentToUIView (mainComponent.getObject(), juceView);
+    //MainWindow::addComponentToUIView (mainComponent.getObject(), juceView);
+    MainContentComponent* mainComponent = new MainContentComponent();
+    MainWindow::addComponentToUIView (*mainComponent, juceView);
     JuceViewController* juceViewController = [[JuceViewController alloc] initWithContentView: juceView];
     
     juceViewController.contentView = juceView;
@@ -59,7 +61,7 @@ MainWindow::MainWindow (String name)  : DocumentWindow (name,
     {
         masterViewController.juceViewController = juceViewController;
         detailNavController = [[UINavigationController alloc] initWithRootViewController: masterViewController];
-        [detailNavController pushViewController:juceViewController animated:false];
+//        [detailNavController pushViewController:juceViewController animated:false];
         [window setRootViewController:detailNavController];
     }
     //[window addSubview:splitVC.view];
