@@ -20,7 +20,8 @@ class MasterViewController: UITableViewController
         super.viewDidLoad()
         
         self.title = "Messages"
-        //self.tableView.delegate = self
+//        self.tableView.delegate = self
+        self.tableView.dataSource = self
         self.loadData()
     }
     

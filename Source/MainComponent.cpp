@@ -25,6 +25,8 @@ MainContentComponent::MainContentComponent()
 {
     setSize (600, 400);
 
+    message = "Hello world!";
+
     // Set up some initial dummy data (courtesy of http://www.json-generator.com)
     data = Data(String("[\n"
                                "  {\n"
@@ -156,22 +158,30 @@ JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, getJsonDataBytes, jbyteArray
     DBG (jsonData);
 
     int byteCount = jsonData.length();
-    DBG ("About to do the cast..");
-    const jbyte* pNativeString = reinterpret_cast<const jbyte*>( (const char *) jsonData.toUTF8());
-    DBG ("Did the cast");
-    jbyteArray bytes = env->NewByteArray(byteCount);
-    DBG ("Done NewByteArray");
-    env->SetByteArrayRegion(bytes, 0, byteCount, pNativeString);
-    DBG ("Done SetByteArrayRegion");
+    const jbyte* pNativeString = reinterpret_cast<const jbyte*> ((const char *) jsonData.toUTF8());
+    jbyteArray bytes = env->NewByteArray (byteCount);
+    env->SetByteArrayRegion (bytes, 0, byteCount, pNativeString);
 
     return bytes;
 }
 
-JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, setMessage, void, (JNIEnv* env, jclass, jstring title, jstring message))
+JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, getMessageTitleBytes, jbyteArray, (JNIEnv* env, jclass))
+{
+    SharedResourcePointer<MainContentComponent> mainComponent;
+    String title = mainComponent->title;
+
+    int byteCount = title.length();
+    const jbyte* pNativeString = reinterpret_cast<const jbyte*> ((const char *) title.toUTF8());
+    jbyteArray bytes = env->NewByteArray (byteCount);
+    env->SetByteArrayRegion (bytes, 0, byteCount, pNativeString);
+
+    return bytes;
+}
+
+JUCE_JNI_CALLBACK (JUCE_ANDROID_ACTIVITY_CLASSNAME, setMessage, void, (JNIEnv* env, jclass, jstring message))
 {
     SharedResourcePointer<MainContentComponent> mainComponent;
 
-    mainComponent->title = juceString (env, title);
     mainComponent->message = juceString (env, message);
     mainComponent->repaint();
 }

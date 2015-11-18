@@ -2,6 +2,7 @@ package com.codegarden.nativenavigation;
 
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,10 +18,13 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     static List<Message> messages;
     private static ClickListener clickListener;
-    private DrawerLayout drawerLayout;
+    private static StringBuilder messageTitle;
+    private static DrawerLayout drawerLayout;
 
-    MessageListAdapter(List<Message> messages){
+    MessageListAdapter(List<Message> messages, StringBuilder messageTitle, DrawerLayout drawerLayout){
         this.messages = messages;
+        this.messageTitle = messageTitle;
+        this.drawerLayout = drawerLayout;
     }
 
     public void setOnItemClickListener(ClickListener clickListener) {
@@ -78,9 +82,11 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         public void onClick(View view) {
             //clickListener.onItemClick(getPosition(), view);
             Log.d("MessageListAdapter", "row " + getAdapterPosition() + " clicked");
-            JuceActivity.setMessage(messages.get(getAdapterPosition()).title, messages.get(getAdapterPosition()).message);
-
-//            drawerLayout.closeDrawers();
+            JuceActivity.setMessage(messages.get(getAdapterPosition()).message);
+            JuceActivity.setMessage("My new message");
+            messageTitle.setLength(0);
+            messageTitle.append(messages.get(getAdapterPosition()).title);
+            drawerLayout.closeDrawers();
         }
     }
 

@@ -23,25 +23,14 @@ MainWindow::MainWindow (String name)  : DocumentWindow (name,
                                                         Colours::lightgrey,
                                                         DocumentWindow::allButtons)
 {
-    
-//    NSError *setCategoryError = nil;
-//    BOOL success = [[AVAudioSession sharedInstance]
-//                    setCategory: AVAudioSessionCategoryPlayAndRecord
-//                    error: &setCategoryError];
-//    
-//    if (!success)
-//    {
-//        /* handle the error in setCategoryError */
-//        DBG ("Error setting category AVAudioSessionCategoryPlayAndRecord");
-//    }
+
 
     UIWindow* window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     window.backgroundColor = [UIColor grayColor];
     
     UIView* juceView = [[UIView alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
     MainWindow::addComponentToUIView (mainComponent.getObject(), juceView);
-    //MainContentComponent* mainComponent = new MainContentComponent();
-    //MainWindow::addComponentToUIView (*mainComponent, juceView);
+
     JuceViewController* juceViewController = [[JuceViewController alloc] initWithContentView: juceView];
     
     juceViewController.contentView = juceView;
@@ -61,7 +50,7 @@ MainWindow::MainWindow (String name)  : DocumentWindow (name,
     {
         masterViewController.juceViewController = juceViewController;
         detailNavController = [[UINavigationController alloc] initWithRootViewController: masterViewController];
-//        [detailNavController pushViewController:juceViewController animated:false];
+        [detailNavController pushViewController:juceViewController animated:false];
         [window setRootViewController:detailNavController];
     }
     //[window addSubview:splitVC.view];
@@ -74,8 +63,8 @@ MainWindow::MainWindow (String name)  : DocumentWindow (name,
     //                                                               //[NSValue valueWithUIOffset:UIOffsetMake(-1, 0)], UITextAttributeTextShadowOffset, nil];
     //
     [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
-    UINavigationBar.appearance.barTintColor = [UIColor blackColor];
-    UINavigationBar.appearance.tintColor = [UIColor whiteColor];
+    UINavigationBar.appearance.barTintColor = [UIColor whiteColor];
+    UINavigationBar.appearance.tintColor = [UIColor blackColor];
     
     [window makeKeyAndVisible];
 }

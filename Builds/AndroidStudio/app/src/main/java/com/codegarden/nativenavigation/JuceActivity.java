@@ -89,6 +89,9 @@ public class JuceActivity   extends AppCompatActivity
     //==============================================================================
 
     private List<Message> messages;
+    private String drawerTitle = "Messages";
+    private StringBuilder messageTitle;
+    private DrawerLayout drawerLayout;
 
     private void initialiseData() {
         Gson gson = new Gson();
@@ -100,13 +103,19 @@ public class JuceActivity   extends AppCompatActivity
         messages = gson.fromJson(json, collectionType);
     }
 
-    public static native void setMessage (String title, String message);
+    public static native void setMessage (String message);
 
     public static String getJsonData()
     {
         return new String(getJsonDataBytes(), Charset.forName("UTF-8"));
     }
     private static native byte[] getJsonDataBytes();
+
+    public static String getMessageTitle()
+    {
+        return new String(getMessageTitleBytes(), Charset.forName("UTF-8"));
+    }
+    private static native byte[] getMessageTitleBytes();
 
     @Override
     public void onCreate (Bundle savedInstanceState)
@@ -120,12 +129,12 @@ public class JuceActivity   extends AppCompatActivity
         // -- Custom native UI
         setContentView(R.layout.main_activity);
         LinearLayout juceViewContainer = (LinearLayout) findViewById(R.id.juce_view_container);
-        juceViewContainer.removeAllViews();
         juceViewContainer.addView(viewHolder);
-//        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
-//        appBarLayout.setExpanded(false, false);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
+        messageTitle = new StringBuilder();
+        messageTitle.append("JUCE meets Android");
+        toolbar.setTitle(messageTitle);
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -137,26 +146,32 @@ public class JuceActivity   extends AppCompatActivity
             }
         });
 
-        // Show the Up button in the action bar.
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         initialiseData();
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.left_drawer);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
 
-        MessageListAdapter adapter = new MessageListAdapter(messages);
-        recyclerView.setAdapter(adapter);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        {
+            public void onDrawerClosed(View view) {
+                toolbar.setTitle(messageTitle);
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                toolbar.setTitle(drawerTitle);
+            }
+        };
+        drawerLayout.setDrawerListener(toggle);
         toggle.syncState();
 
+        MessageListAdapter adapter = new MessageListAdapter(messages, messageTitle, drawerLayout);
+        recyclerView.setAdapter(adapter);
         //--------------------------------------
 
-        setVolumeControlStream (AudioManager.STREAM_MUSIC);
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
 
     @Override
