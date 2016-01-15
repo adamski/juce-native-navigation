@@ -5,8 +5,10 @@ The idea is to show how to mix native UI elements and pass data to and from C++ 
 
 The example app shows a list of random messages with titles stored as JSON in the `MainComponent` class. The JSON data is used by both Android and iOS UI classes to populate a list. When the user selects an item title from the list, the corresponding message is sent to the `MainComponent` class for display.  
 
-In iOS a `UINavigationController` is used to navigate between JUCE and an iOS `UITableView`.
-For Android a `NavigationDrawer` is used to bring up a list of items. 
+In **iOS** a `UINavigationController` is used to navigate between JUCE and an iOS `UITableView`.
+** Please note ** if you re-save the Introjucer project you will need to remove and re-add the Swift files for it to work!
+
+For **Android** a `NavigationDrawer` is used to bring up a list of items. 
 
 This project was written as part of a talk given at the **JUCE Summit 2015** (20th November 2015).
 
