@@ -24,24 +24,19 @@
 
 package com.codegarden.nativenavigation;
 
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.Handler;
+import android.os.Build;
+import android.os.Process;
 import android.os.ParcelUuid;
 import android.view.*;
 import android.view.inputmethod.BaseInputConnection;
@@ -54,8 +49,6 @@ import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import java.lang.Runnable;
-import java.lang.reflect.Type;
-import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -69,14 +62,11 @@ import android.media.AudioManager;
 import android.media.MediaScannerConnection;
 import android.media.MediaScannerConnection.MediaScannerConnectionClient;
 
-import android.widget.LinearLayout;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 
 //==============================================================================
-public class JuceActivity   extends AppCompatActivity
+public class JuceActivity   extends Activity
 {
     //==============================================================================
     static
@@ -85,32 +75,137 @@ public class JuceActivity   extends AppCompatActivity
     }
 
     //==============================================================================
+    public static class MidiPortID extends Object
+    {
+        public MidiPortID (int index, boolean direction)
+        {
+            androidIndex = index;
+            isInput = direction;
+        }
+
+        public int androidIndex;
+        public boolean isInput;
+
+        @Override
+        public int hashCode()
+        {
+            Integer i = new Integer (androidIndex);
+            return i.hashCode() * (isInput ? -1 : 1);
+        }
+
+        @Override
+        public boolean equals (Object obj)
+        {
+            if (obj == null)
+                return false;
+
+            if (getClass() != obj.getClass())
+                return false;
+
+            MidiPortID other = (MidiPortID) obj;
+            return (androidIndex == other.androidIndex && isInput == other.isInput);
+        }
+    }
+
+    public interface JuceMidiPort
+    {
+        boolean isInputPort();
+
+        // start, stop does nothing on an output port
+        void start();
+        void stop();
+
+        void close();
+        MidiPortID getPortId();
+
+        // send will do nothing on an input port
+        void sendMidi (byte[] msg, int offset, int count);
+    }
 
     //==============================================================================
-
-    private List<Message> messages;
-    private String drawerTitle = "Messages";
-    private StringBuilder messageTitle;
-    private DrawerLayout drawerLayout;
-
-    private void initialiseData() {
-        Gson gson = new Gson();
-        messages = new ArrayList<>();
-
-        Type collectionType = new TypeToken<List<Message>>(){}.getType();
-        String json = JuceActivity.getJsonData();
-        Log.d("JSON", json);
-        messages = gson.fromJson(json, collectionType);
-    }
-
-    public static native void setMessage (String message);
-
-    public static String getJsonData()
+    //==============================================================================
+    public class BluetoothManager
     {
-        return new String(getJsonDataBytes(), Charset.forName("UTF-8"));
-    }
-    private static native byte[] getJsonDataBytes();
+        BluetoothManager()
+        {
+        }
 
+        public String[] getMidiBluetoothAddresses()
+        {
+            String[] bluetoothAddresses = new String[0];
+            return bluetoothAddresses;
+        }
+
+        public String getHumanReadableStringForBluetoothAddress (String address)
+        {
+            return address;
+        }
+
+        public boolean isBluetoothDevicePaired (String address)
+        {
+            return false;
+        }
+
+        public boolean pairBluetoothMidiDevice(String address)
+        {
+            return false;
+        }
+
+        public void unpairBluetoothMidiDevice (String address)
+        {
+        }
+    }
+
+    //==============================================================================
+    public class MidiDeviceManager
+    {
+        public MidiDeviceManager()
+        {
+        }
+
+        public String[] getJuceAndroidMidiInputDevices()
+        {
+            return new String[0];
+        }
+
+        public String[] getJuceAndroidMidiOutputDevices()
+        {
+            return new String[0];
+        }
+
+        public JuceMidiPort openMidiInputPortWithJuceIndex (int index, long host)
+        {
+            return null;
+        }
+
+        public JuceMidiPort openMidiOutputPortWithJuceIndex (int index)
+        {
+            return null;
+        }
+
+        public String getInputPortNameForJuceIndex (int index)
+        {
+            return "";
+        }
+
+        public String getOutputPortNameForJuceIndex (int index)
+        {
+            return "";
+        }
+    }
+
+
+    public MidiDeviceManager getAndroidMidiDeviceManager()
+    {
+        return null;
+    }
+
+    public BluetoothManager getAndroidBluetoothManager()
+    {
+        return null;
+    }
+
+    //==============================================================================
     @Override
     public void onCreate (Bundle savedInstanceState)
     {
@@ -119,51 +214,6 @@ public class JuceActivity   extends AppCompatActivity
         isScreenSaverEnabled = true;
         viewHolder = new ViewHolder (this);
         setContentView (viewHolder);
-
-        // -- Custom native UI
-        setContentView(R.layout.main_activity);
-        LinearLayout juceViewContainer = (LinearLayout) findViewById(R.id.juce_view_container);
-        juceViewContainer.addView(viewHolder);
-
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.detail_toolbar);
-        messageTitle = new StringBuilder();
-        messageTitle.append("JUCE meets Android");
-        toolbar.setTitle(messageTitle);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own detail action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        initialiseData();
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.left_drawer);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(llm);
-
-
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        {
-            public void onDrawerClosed(View view) {
-                toolbar.setTitle(messageTitle);
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                toolbar.setTitle(drawerTitle);
-            }
-        };
-        drawerLayout.setDrawerListener(toggle);
-        toggle.syncState();
-
-        MessageListAdapter adapter = new MessageListAdapter(messages, messageTitle, drawerLayout);
-        recyclerView.setAdapter(adapter);
-        //--------------------------------------
 
         setVolumeControlStream (AudioManager.STREAM_MUSIC);
     }
@@ -230,6 +280,8 @@ public class JuceActivity   extends AppCompatActivity
 
     //==============================================================================
     private ViewHolder viewHolder;
+    private MidiDeviceManager midiDeviceManager = null;
+    private BluetoothManager bluetoothManager = null;
     private boolean isScreenSaverEnabled;
     private java.util.Timer keepAliveTimer;
 
@@ -1123,4 +1175,3 @@ public class JuceActivity   extends AppCompatActivity
     }
 
 }
-

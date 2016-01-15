@@ -2,32 +2,31 @@
 
 <JUCERPROJECT id="NKEmyR" name="NativeNavigation" projectType="guiapp" version="1.0.0"
               bundleIdentifier="com.yourcompany.nativeNavigation" includeBinaryInAppConfig="0"
-              jucerVersion="4.0.1">
+              jucerVersion="4.1.0">
   <MAINGROUP id="y4BUN6" name="NativeNavigation">
     <GROUP id="{E7EF3FA8-6B80-37FB-4D0A-E97DF6D9401D}" name="Source">
       <FILE id="CthAX9" name="Data.h" compile="0" resource="0" file="Source/Data.h"/>
       <GROUP id="{D746C483-A088-3457-E2D2-B5ED98D8CB81}" name="iOS">
-        <FILE id="yo1qhl" name="ScaleController.cpp" compile="1" resource="0"
-              file="Builds/iOS/ScaleController.cpp"/>
-        <FILE id="K1KajL" name="ScaleController.h" compile="0" resource="0"
-              file="Builds/iOS/ScaleController.h"/>
-        <FILE id="sSWsce" name="ScaleControllerObjC.h" compile="0" resource="0"
-              file="Builds/iOS/ScaleControllerObjC.h"/>
-        <FILE id="RM2uVc" name="ScaleControllerObjC.mm" compile="1" resource="0"
-              file="Builds/iOS/ScaleControllerObjC.mm"/>
-        <FILE id="I5nHHk" name="TestViewController.xib" compile="0" resource="1"
-              file="Builds/iOS/TestViewController.xib"/>
-        <FILE id="iCq8Au" name="iosMainWindow.h" compile="0" resource="0" file="Source/iosMainWindow.h"/>
-        <FILE id="izy6h3" name="iosMainWindow.mm" compile="1" resource="0"
-              file="Source/iosMainWindow.mm"/>
-        <FILE id="TMzdEt" name="MainViewController.h" compile="0" resource="0"
-              file="Source/MainViewController.h"/>
-        <FILE id="V44RC0" name="MainViewController.m" compile="1" resource="0"
-              file="Source/MainViewController.m"/>
-        <FILE id="Iy6Dwe" name="TestViewController.h" compile="0" resource="0"
-              file="Source/TestViewController.h"/>
-        <FILE id="JTDskY" name="TestViewController.m" compile="1" resource="0"
-              file="Source/TestViewController.m"/>
+        <FILE id="VdECgd" name="DataController.cpp" compile="1" resource="0"
+              file="Builds/iOS/DataController.cpp"/>
+        <FILE id="dCZnUK" name="DataController.h" compile="0" resource="0"
+              file="Builds/iOS/DataController.h"/>
+        <FILE id="Efc5MZ" name="DataControllerObjC.h" compile="0" resource="0"
+              file="Builds/iOS/DataControllerObjC.h"/>
+        <FILE id="Btd0Np" name="DataControllerObjC.mm" compile="1" resource="0"
+              file="Builds/iOS/DataControllerObjC.mm"/>
+        <FILE id="oAq5NU" name="iosMainWindow.h" compile="0" resource="0" file="Builds/iOS/iosMainWindow.h"/>
+        <FILE id="McXWLP" name="iosMainWindow.mm" compile="1" resource="0"
+              file="Builds/iOS/iosMainWindow.mm"/>
+        <FILE id="cOzK3U" name="JuceViewController.swift" compile="1" resource="0"
+              file="Builds/iOS/JuceViewController.swift"/>
+        <FILE id="PG4PH3" name="MasterViewController.swift" compile="1" resource="0"
+              file="Builds/iOS/MasterViewController.swift"/>
+        <FILE id="baelvf" name="MasterViewController.xib" compile="0" resource="1"
+              file="Builds/iOS/MasterViewController.xib"/>
+        <FILE id="ekmYDv" name="Message.swift" compile="1" resource="0" file="Builds/iOS/Message.swift"/>
+        <FILE id="pZcoOW" name="NativeNavigation-Bridging-Header.h" compile="0"
+              resource="0" file="Builds/iOS/NativeNavigation-Bridging-Header.h"/>
       </GROUP>
       <FILE id="KcwIra" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
@@ -40,9 +39,9 @@
     <XCODE_IPHONE targetFolder="Builds/iOS">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" iosCompatibility="default" isDebug="1" optimisation="1"
-                       targetName="iosNavigation"/>
+                       targetName="NativeNavigation"/>
         <CONFIGURATION name="Release" iosCompatibility="default" isDebug="0" optimisation="3"
-                       targetName="iosNavigation"/>
+                       targetName="NativeNavigation"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="../../juce/modules"/>
@@ -58,7 +57,8 @@
              androidMinimumSDK="10" androidInternetNeeded="1" androidKeyStore="${user.home}/.android/debug.keystore"
              androidKeyStorePass="android" androidKeyAlias="androiddebugkey"
              androidKeyAliasPass="android" androidCpp11="1" androidSDKPath=""
-             androidNDKPath="" androidActivitySubClassName="MainActivity">
+             androidNDKPath="" androidActivitySubClassName="MainActivity"
+             androidBluetoothNeeded="1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" androidArchitectures="armeabi armeabi-v7a" isDebug="1"
                        optimisation="1" targetName="NativeNavigation"/>
@@ -80,7 +80,8 @@
                    androidKeyStorePass="android" androidKeyAlias="androiddebugkey"
                    androidKeyAliasPass="android" androidCpp11="1" targetFolder="Builds/AndroidStudio"
                    androidSDKPath="/Users/adamelemental/dev/SDKs/android-sdk" androidNDKPath="/Users/adamelemental/dev/SDKs/android-ndk"
-                   androidActivitySubClassName="" toolset="" androidNdkPlatformVersion="19">
+                   androidActivitySubClassName="" toolset="" androidNdkPlatformVersion="19"
+                   androidBluetoothNeeded="1">
       <CONFIGURATIONS>
         <CONFIGURATION name="Debug" androidArchitectures="armeabi armeabi-v7a x86" isDebug="1"
                        optimisation="1" targetName="NativeNavigation"/>
